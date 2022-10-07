@@ -1,0 +1,18 @@
+# ninja log v5
+1	176	1665133031547252435	CMakeFiles/RaytraceEngine.dir/main.cpp.o	d5431df80547ff6f
+176	223	1665133031595252055	RaytraceEngine	ef54e6edb35d9eaf
+0	17	1665133985121218168	build.ninja	4507b10b046073b5
+1	170	1665133985297216928	CMakeFiles/RaytraceEngine.dir/main.cpp.o	d5431df80547ff6f
+170	212	1665133985337216647	RaytraceEngine	ef54e6edb35d9eaf
+0	160	1665134010069042250	CMakeFiles/RaytraceEngine.dir/main.cpp.o	d5431df80547ff6f
+160	197	1665134010105041995	RaytraceEngine	ef54e6edb35d9eaf
+0	159	1665134021580960940	CMakeFiles/RaytraceEngine.dir/main.cpp.o	d5431df80547ff6f
+160	191	1665134021612960714	RaytraceEngine	ef54e6edb35d9eaf
+1	165	1665134194147734147	CMakeFiles/RaytraceEngine.dir/main.cpp.o	d5431df80547ff6f
+165	197	1665134194179733919	RaytraceEngine	ef54e6edb35d9eaf
+0	160	1665134220723546619	CMakeFiles/RaytraceEngine.dir/main.cpp.o	d5431df80547ff6f
+160	199	1665134220763546467	RaytraceEngine	ef54e6edb35d9eaf
+1	144	1665134284027295797	CMakeFiles/RaytraceEngine.dir/main.cpp.o	d5431df80547ff6f
+144	175	1665134284059295664	RaytraceEngine	ef54e6edb35d9eaf
+0	140	1665134331555093395	CMakeFiles/RaytraceEngine.dir/main.cpp.o	d5431df80547ff6f
+140	179	1665134331595093218	RaytraceEngine	ef54e6edb35d9eaf
