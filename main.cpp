@@ -22,10 +22,10 @@ public:
     Coordinate(double x, double y, double z, int point) : x(x), y(y), z(z), point(point) {}
 
     void setCoords(double x, double y, double z, int point) {
-        Coordinate::x = x;
-        Coordinate::y = y;
-        Coordinate::z = z;
-        Coordinate::point = point;
+        x = x;
+        y = y;
+        z = z;
+        point = point;
     }
 
     double getX() const {
@@ -85,15 +85,39 @@ class Object {
 public:
     Object(const Coordinate &center, int r, int g, int b) : center(center), r(r), g(g), b(b) {}
 
+    int getR() const {
+        return r;
+    }
+
+    int getG() const {
+        return g;
+    }
+
+    int getB() const {
+        return b;
+    }
 };
 
-class Sphere : private Object {
+class Sphere : public Object {
     double radius;
+    float matrix[4][4];
 public:
-    Sphere(const Coordinate &center, int r, int g, int b, double radius) : Object(center, r, g, b), radius(radius) {}
+    Sphere(const Coordinate &center, int r, int g, int b, double radius) : Object(center, r, g, b), radius(radius) {
+        for (int i=0;i<4;i++){
+            for (int j=0;j<4;j++){
+                matrix[i][j] = 0;
+            }
+        }
+        for (int i=0;i<4;i++){
+            matrix[i][i] = 1;
+        }
+        matrix[3][0] = center.getX();
+        matrix[3][1] = center.getY();
+        matrix[3][2] = center.getZ();
+    }
 
-    Coordinate hit(Ray ray) { //zet de hit functie binnen de object class, dan kan je gewoon object.hit(ray)
-        Coordinate temp(-1,-1,-1,1);
+
+    Coordinate hit(Ray ray) {
         //Coordinate tempOrig(ray.getOrigin().getX()-sphere.getTranslationX(),ray.getOrigin().getY()-sphere.getTranslationY(),ray.getOrigin().getZ()-sphere.getTranslationZ(),1);
         //Coordinate tempDir(ray.getDirection().getX()-sphere.getTranslationX(),ray.getDirection().getY()-sphere.getTranslationY(),ray.getDirection().getZ()-sphere.getTranslationZ(),0);
 
@@ -106,7 +130,8 @@ public:
         double discrim = B*B - 4 * A * C;
 
         if (discrim<0) {
-            cout << endl << "No hit." << endl;
+            //cout << endl << "No hit." << endl;
+            Coordinate temp(0,0,0,0);
             return temp;
         }
 
@@ -133,38 +158,41 @@ public:
 
 };
 
+//float * inverse(float in[4][4]) {
+//    float * out[4][4];
+//
+//    return out;
+//};
+
 int main(int argc, char *argv[]) {
 
     int screenX = 1280, screenY = 720;
+    int W = screenX/2, H = screenY/2; // Technically H = N*tan(theta/2) and W = H*aspect
+    int N = 50; //distance between eye and screen
+    int u[screenX],v[screenY];
 
-
-
-    int nRows = 10, nCols = 20;
-    Coordinate eye(0,0,0, 1);
-
-    for(int r = 0; r < nRows; r++) {
-        cout << endl;
-        for (int c = 0; c < nCols; c++) {
-            cout << "O";
-        }
+    for (int c = 0; c < screenX; c++) {
+        u[c] = (-W + (W * 2 * c) / screenX);
+    }
+    for (int r = 0; r < screenY; r++) {
+        v[r] = (-H + (H * 2 * r) / screenY);
     }
 
-    Coordinate centerSphere(0,0,0,1);
-    Sphere sphere(centerSphere,255,255,255,1);
+    Coordinate centerSphere(0, 0, 0, 1);
+    Sphere sphere(centerSphere, 148,0,211, 1);
 
-    Coordinate originRay(-3,0,0,1);
-    Coordinate directionRay(-2,0,0,0);
-    Ray firstRay(originRay,directionRay);
+    Coordinate originRay(-3, 0, 0, 1);
+    Coordinate directionRay(-2, 0, 0, 0);
+    Ray firstRay(originRay, directionRay);
 
     Coordinate i1 = sphere.hit(firstRay);
 
+    Coordinate centerSphere2(3, 3, 3, 1);
+    Sphere sphere2(centerSphere, 0, 255, 0, 1);
 
-    Coordinate centerSphere2(3,3,3,1);
-    Sphere sphere2(centerSphere,255,255,255,1);
-
-    Coordinate originRay2(0,0,0,1);
-    Coordinate directionRay2(1,1,1,0);
-    Ray firstRay2(originRay,directionRay);
+    Coordinate originRay2(0, 0, 0, 1);
+    Coordinate directionRay2(1, 1, 1, 0);
+    Ray firstRay2(originRay, directionRay);
 
     sphere2.hit(firstRay2);
 
@@ -172,28 +200,40 @@ int main(int argc, char *argv[]) {
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 
     glutInitWindowPosition(80, 80);
-    glutInitWindowSize(screenX,screenY);
+    glutInitWindowSize(screenX, screenY);
 
     glutCreateWindow("Raytrace Engine");
 
     glClear(GL_COLOR_BUFFER_BIT);
-    glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    gluOrtho2D( 0.0, screenX, screenY,0.0 );
+    gluOrtho2D(0.0, screenX, screenY, 0.0);
+    glClearColor(0.0,0.0,0.0,0.0);
+    glMatrixMode(GL_PROJECTION);
 
     glBegin(GL_POINTS);
-        glColor3f(255,255,255);
-        glVertex2i(100,100);
+//        Coordinate eye(-3, -3, -3, 1);
+//
+//        for (int r = 0; r < screenY; r++) {
+//            for (int c = 0; c < screenX; c++) {
+//                float x=0,y=0,z=0;
+//                x = eye.getX() - N;
+//                y = eye.getY() + u[c];
+//                z = eye.getZ() + v[r];
+//                Coordinate screenVec(x,y,z,0);
+//                Ray screenRays(eye,screenVec);
+//                if (sphere2.hit(screenRays).isPoint()) {
+//                    glColor3f(sphere2.getR(), sphere2.getG(), sphere2.getB());
+//                    glVertex2i(screenVec.getX()+W, screenVec.getY()+H);
+//                }
+//
+//            }
+//        }
+
+//        for (int i = 0; i < 500; i++) {
+//                glVertex2i(i, i);
+//        }
     glEnd();
-
-    glEnable(GL_SCISSOR_TEST);
-    glScissor(100, 200, 1, 1);
-    glClearColor(1,1,1,1);
-    glClear(GL_COLOR_BUFFER_BIT);
-// Remember to disable scissor test, or, perhaps reset the scissor rectangle:
-    glDisable(GL_SCISSOR_TEST);
-
-
+    glFlush();
 
     while (1)
         ;
