@@ -219,8 +219,8 @@ int main(int argc, char *argv[]) {
 
     sphere2.hit(firstRay2);
 
-    Coordinate centerSphere3(  0.0, 10.0, 0.0, 1);
-    Sphere sphere3(centerSphere3, 0, 255, 0, 3.0);
+    Coordinate centerSphere3(  0.0, 100.0, 0.0, 1);
+    Sphere sphere3(centerSphere3, 0, 255, 0, 70.0);
 
     Coordinate originRay3(0, 3, 3, 1);
     Coordinate directionRay3(1, 3, 3, 0);
@@ -279,7 +279,7 @@ int main(int argc, char *argv[]) {
                 Ray screenRays1(eye,screenWorldCoordinate);
                 if (sphere3.hit(screenRays1).isPoint()) {
                     glColor3f(sphere3.getR(), sphere3.getG(), sphere3.getB());
-                glVertex2i(screenWorldCoordinate.getX(), screenWorldCoordinate.getZ());
+                glVertex2i(c/2, r/2);
                 }
 
             }
