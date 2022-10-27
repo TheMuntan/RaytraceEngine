@@ -55,6 +55,30 @@ build CMakeFiles/RaytraceEngine.dir/main.cpp.o: CXX_COMPILER__RaytraceEngine_Deb
   OBJECT_DIR = CMakeFiles/RaytraceEngine.dir
   OBJECT_FILE_DIR = CMakeFiles/RaytraceEngine.dir
 
+build CMakeFiles/RaytraceEngine.dir/Coordinate.cpp.o: CXX_COMPILER__RaytraceEngine_Debug /home/muntan/CLionProjects/RaytraceEngine/Coordinate.cpp || cmake_object_order_depends_target_RaytraceEngine
+  DEP_FILE = CMakeFiles/RaytraceEngine.dir/Coordinate.cpp.o.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles/RaytraceEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/RaytraceEngine.dir
+
+build CMakeFiles/RaytraceEngine.dir/Ray.cpp.o: CXX_COMPILER__RaytraceEngine_Debug /home/muntan/CLionProjects/RaytraceEngine/Ray.cpp || cmake_object_order_depends_target_RaytraceEngine
+  DEP_FILE = CMakeFiles/RaytraceEngine.dir/Ray.cpp.o.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles/RaytraceEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/RaytraceEngine.dir
+
+build CMakeFiles/RaytraceEngine.dir/Objects/Object.cpp.o: CXX_COMPILER__RaytraceEngine_Debug /home/muntan/CLionProjects/RaytraceEngine/Objects/Object.cpp || cmake_object_order_depends_target_RaytraceEngine
+  DEP_FILE = CMakeFiles/RaytraceEngine.dir/Objects/Object.cpp.o.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles/RaytraceEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/RaytraceEngine.dir/Objects
+
+build CMakeFiles/RaytraceEngine.dir/Objects/Sphere.cpp.o: CXX_COMPILER__RaytraceEngine_Debug /home/muntan/CLionProjects/RaytraceEngine/Objects/Sphere.cpp || cmake_object_order_depends_target_RaytraceEngine
+  DEP_FILE = CMakeFiles/RaytraceEngine.dir/Objects/Sphere.cpp.o.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles/RaytraceEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/RaytraceEngine.dir/Objects
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target RaytraceEngine
@@ -63,7 +87,7 @@ build CMakeFiles/RaytraceEngine.dir/main.cpp.o: CXX_COMPILER__RaytraceEngine_Deb
 #############################################
 # Link the executable RaytraceEngine
 
-build RaytraceEngine: CXX_EXECUTABLE_LINKER__RaytraceEngine_Debug CMakeFiles/RaytraceEngine.dir/main.cpp.o | /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libglut.so
+build RaytraceEngine: CXX_EXECUTABLE_LINKER__RaytraceEngine_Debug CMakeFiles/RaytraceEngine.dir/main.cpp.o CMakeFiles/RaytraceEngine.dir/Coordinate.cpp.o CMakeFiles/RaytraceEngine.dir/Ray.cpp.o CMakeFiles/RaytraceEngine.dir/Objects/Object.cpp.o CMakeFiles/RaytraceEngine.dir/Objects/Sphere.cpp.o | /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libglut.so
   FLAGS = -g
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libOpenGL.so  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libGLU.so  /usr/lib/x86_64-linux-gnu/libglut.so
   OBJECT_DIR = CMakeFiles/RaytraceEngine.dir
