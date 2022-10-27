@@ -16,9 +16,10 @@
 #include "Ray.h"
 #include "Objects/Object.h"
 #include "Objects/Sphere.h"
+#include "Objects/Cube.h"
 
 
-using namespace std;
+using namespace std; // std vector for dynamic vector size
 
 
 int main(int argc, char *argv[]) {
@@ -55,6 +56,10 @@ int main(int argc, char *argv[]) {
 //    Ray ray3(originRay3, directionRay3);
 //
 //    sphere3.hit(ray3);
+
+    Coordinate centerCube1(  0.0, 600.0, 100.0, 1);
+    Cube cube1(centerCube1, 1, 0.0, 1, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0);
+
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -129,6 +134,12 @@ int main(int argc, char *argv[]) {
 
                 glVertex2i(c / 2, -r / 2 + screenY);
             }
+            if (cube1.hit(screenRay).isPoint()) {
+                glColor3f(cube1.getR(), cube1.getG(), cube1.getB());
+                glVertex2i(c / 2, -r / 2 + screenY);
+
+            }
+
         }
         glEnd();
         glFlush();

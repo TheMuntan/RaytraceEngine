@@ -28,10 +28,12 @@ Coordinate Coordinate::operator * (float b) {
 }
 
 void Coordinate::normalise() {
-    float length = sqrt(pow(x,2) + pow(y,2) + pow(z,2));
-    x = x/length;
-    y = y/length;
-    z = z/length;
+    if (!point) {
+        float length = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+        x = x / length;
+        y = y / length;
+        z = z / length;
+    }
 }
 
 void Coordinate::setCoords(float x, float y, float z, int point) {

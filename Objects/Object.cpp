@@ -171,3 +171,41 @@ void Object::setRotateZ(float rotateZ) {
 const Coordinate Object::getCenter() const {
     return center;
 }
+
+Ray Object::invRay(Ray ray) {
+    Coordinate failedHit(0, 0, 0, 0);
+
+    float tempX = (invMatrix[0][0] * ray.getOrigin().getX() + invMatrix[0][1] * ray.getOrigin().getY() +
+                   invMatrix[0][2] * ray.getOrigin().getZ() + invMatrix[0][3] * ray.getOrigin().isPoint());
+    float tempY = (invMatrix[1][0] * ray.getOrigin().getX() + invMatrix[1][1] * ray.getOrigin().getY() +
+                   invMatrix[1][2] * ray.getOrigin().getZ() + invMatrix[1][3] * ray.getOrigin().isPoint());
+    float tempZ = (invMatrix[2][0] * ray.getOrigin().getX() + invMatrix[2][1] * ray.getOrigin().getY() +
+                   invMatrix[2][2] * ray.getOrigin().getZ() + invMatrix[2][3] * ray.getOrigin().isPoint());
+    float tempP = (invMatrix[3][0] * ray.getOrigin().getX() + invMatrix[3][1] * ray.getOrigin().getY() +
+                   invMatrix[3][2] * ray.getOrigin().getZ() + invMatrix[3][3] * ray.getOrigin().isPoint());
+    Coordinate tempOrig(tempX, tempY, tempZ, tempP);
+    tempX = (invMatrix[0][0] * ray.getDirection().getX() + invMatrix[0][1] * ray.getDirection().getY() +
+             invMatrix[0][2] * ray.getDirection().getZ() + invMatrix[0][3] * ray.getDirection().isPoint());
+    tempY = (invMatrix[1][0] * ray.getDirection().getX() + invMatrix[1][1] * ray.getDirection().getY() +
+             invMatrix[1][2] * ray.getDirection().getZ() + invMatrix[1][3] * ray.getDirection().isPoint());
+    tempZ = (invMatrix[2][0] * ray.getDirection().getX() + invMatrix[2][1] * ray.getDirection().getY() +
+             invMatrix[2][2] * ray.getDirection().getZ() + invMatrix[2][3] * ray.getDirection().isPoint());
+    tempP = (invMatrix[3][0] * ray.getDirection().getX() + invMatrix[3][1] * ray.getDirection().getY() +
+             invMatrix[3][2] * ray.getDirection().getZ() + invMatrix[3][3] * ray.getDirection().isPoint());
+    Coordinate tempDir(tempX, tempY, tempZ, tempP);
+
+    Ray newRay(tempOrig, tempDir);
+    return newRay;
+}
+
+Coordinate Object::calcRealCoords(float tempX, float tempY, float tempZ, float tempP) {
+    float newX = (matrix[0][0] * tempX + matrix[0][1] * tempY + matrix[0][2] * tempZ + matrix[0][3] * tempP);
+    float newY = (matrix[1][0] * tempX + matrix[1][1] * tempY + matrix[1][2] * tempZ + matrix[1][3] * tempP);
+    float newZ = (matrix[2][0] * tempX + matrix[2][1] * tempY + matrix[2][2] * tempZ + matrix[2][3] * tempP);
+    float newP = (matrix[3][0] * tempX + matrix[3][1] * tempY + matrix[3][2] * tempZ + matrix[3][3] * tempP);
+
+    Coordinate realCoords(newX, newY, newZ, newP);
+    return realCoords;
+
+}
+

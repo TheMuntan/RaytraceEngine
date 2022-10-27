@@ -7,6 +7,7 @@
 
 #include "../Coordinate.h"
 #include "cmath"
+#include "../Ray.h"
 
 using namespace std;
 
@@ -35,6 +36,10 @@ public:
     void setRotateY(float rotateY);
 
     void setRotateZ(float rotateZ);
+
+    Ray invRay(Ray ray);
+
+    Coordinate calcRealCoords(float tempX, float tempY, float tempZ, float tempP);
 };
 
 
