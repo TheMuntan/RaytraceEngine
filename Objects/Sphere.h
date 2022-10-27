@@ -17,6 +17,8 @@ public:
     Sphere(float radius, const Coordinate &center, int r, int g, int b, float rotateX, float rotateY, float rotateZ, float scaleX,
            float scaleY, float scaleZ);
 
+    float getRadius() const;
+
     Coordinate hit(Ray ray);
 
 };

@@ -27,34 +27,34 @@ int main(int argc, char *argv[]) {
     int screenX = 1280, screenY = 720;
 
     Coordinate centerSphere(500.0, 1500.0, 0.0, 1);
-    Sphere sphere(500.0, centerSphere, 255,0,0, 0.0, 0.0, 0.0, 2, 1.0, 1.0);
+    Sphere sphere(500.0, centerSphere, 1.0,0.1,0.0, 0.0, 0.0, 0.0, 2, 1.0, 1.0);
     spheres[0] = &sphere;
 
-    Coordinate originRay(-3, 0, 0, 1);
-    Coordinate directionRay(-2, 0, 0, 1);
-    Ray ray1(originRay, directionRay);
+//    Coordinate originRay(-3, 0, 0, 1);
+//    Coordinate directionRay(-2, 0, 0, 1);
+//    Ray ray1(originRay, directionRay);
+//
+//    Coordinate i1 = sphere.hit(ray1);
 
-    Coordinate i1 = sphere.hit(ray1);
-
-    Coordinate centerSphere2(-50, 3, 3, 1);
-    Sphere sphere2(100.0, centerSphere2, 0, 255, 0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-
-    Coordinate originRay2(0, 3, 3, 1);
-    Coordinate directionRay2(1, 3, 3, 1);
-    Ray ray2(originRay2, directionRay2);
-
-    sphere2.hit(ray2);
+    Coordinate centerSphere2(-100, 1000, -100, 1);
+    Sphere sphere2(200.0, centerSphere2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
     spheres[1] = &sphere2;
 
+//    Coordinate originRay2(0, 3, 3, 1);
+//    Coordinate directionRay2(1, 3, 3, 1);
+//    Ray ray2(originRay2, directionRay2);
+//
+//    sphere2.hit(ray2);
+
     Coordinate centerSphere3(  500.0, 2000.0, 500.0, 1);
-    Sphere sphere3(1000.0, centerSphere3, 50, 0, 255, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    Sphere sphere3(1000.0, centerSphere3, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
     spheres[2] = &sphere3;
 
-    Coordinate originRay3(0, 3, 3, 1);
-    Coordinate directionRay3(3, 4, 3, 1);
-    Ray ray3(originRay3, directionRay3);
-
-    sphere3.hit(ray3);
+//    Coordinate originRay3(0, 3, 3, 1);
+//    Coordinate directionRay3(3, 4, 3, 1);
+//    Ray ray3(originRay3, directionRay3);
+//
+//    sphere3.hit(ray3);
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -122,8 +122,9 @@ int main(int argc, char *argv[]) {
                 glBegin(GL_POINTS);
                 glColor3f(spheres[closestIndex]->getR(), spheres[closestIndex]->getG(), spheres[closestIndex]->getB());
 
-                if ((spheres[closestIndex]->getCenter().distance(eye)-hits[closestIndex].distance(eye))<300) {
-                    glColor3f(255,255,255);
+                if ((spheres[closestIndex]->getCenter().distance(eye)-hits[closestIndex].distance(eye))<spheres[closestIndex]->getRadius()/2.0) {
+                    glColor3f(spheres[closestIndex]->getR()/5.0, spheres[closestIndex]->getG()/5.0, spheres[closestIndex]->getB()/5.0);
+//                    glColor4f(spheres[closestIndex]->getR(), spheres[closestIndex]->getG(), spheres[closestIndex]->getB(), 0.1);
                 }
 
                 glVertex2i(c / 2, -r / 2 + screenY);
