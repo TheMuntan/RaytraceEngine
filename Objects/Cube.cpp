@@ -88,6 +88,7 @@ Coordinate Cube::hit(Ray ray) {
 
 vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
+//    hitLocation / 5.0;
 
     vector<float> test = {0.0, 0.0, 1.0, 1.0};
 

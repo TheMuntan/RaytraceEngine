@@ -17,20 +17,25 @@
 #include "Objects/Object.h"
 #include "Objects/Sphere.h"
 #include "Objects/Cube.h"
+#include "Objects/Plane.h"
 
 
 using namespace std; // std vector for dynamic vector size
 
 
 int main(int argc, char *argv[]) {
-    int totalObjects = 4;
+    int totalObjects = 5;
     Object *objects[totalObjects];
 
     int screenX = 1280, screenY = 720;
 
-    Coordinate centerSphere(500.0, 1500.0, 0.0, 1);
-    Sphere sphere(500.0, centerSphere, 1.0,0.1,0.0, 1.0, 0.0, 0.0, 0.0, 2, 1.0, 1.0);
-    objects[0] = &sphere;
+    Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
+    Plane plane1(planeCenter1, 1.0,1.0,1.0, 1.0, 20.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    objects[0] = &plane1;
+
+    Coordinate centerSphere1(500.0, 1500.0, 0.0, 1);
+    Sphere sphere1(500.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 0.0, 0.0, 2.0, 1.0, 1.0);
+    objects[1] = &sphere1;
 
 //    Coordinate originRay(-3, 0, 0, 1);
 //    Coordinate directionRay(-2, 0, 0, 1);
@@ -40,7 +45,7 @@ int main(int argc, char *argv[]) {
 
     Coordinate centerSphere2(-100, 1000, -100, 1);
     Sphere sphere2(200.0, centerSphere2, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    objects[1] = &sphere2;
+    objects[2] = &sphere2;
 
 //    Coordinate originRay2(0, 3, 3, 1);
 //    Coordinate directionRay2(1, 3, 3, 1);
@@ -50,7 +55,7 @@ int main(int argc, char *argv[]) {
 
     Coordinate centerSphere3(  500.0, 2500.0, 500.0, 1);
     Sphere sphere3(1000.0, centerSphere3, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    objects[2] = &sphere3;
+    objects[3] = &sphere3;
 
 //    Coordinate originRay3(0, 3, 3, 1);
 //    Coordinate directionRay3(3, 4, 3, 1);
@@ -60,7 +65,7 @@ int main(int argc, char *argv[]) {
 
     Coordinate centerCube1(  -600.0, 600.0, 200.0, 1);
     Cube cube1(centerCube1, 1.0, 0.0, 1.0, 1.0, 0.0, 45.0, 0.0, 150.0, 150.0, 150.0);
-    objects[3] = &cube1;
+    objects[4] = &cube1;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
@@ -84,7 +89,6 @@ int main(int argc, char *argv[]) {
 
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
-//    glBegin(GL_POINTS);
     Coordinate lightDirection(-7.0,-5.0,-10.0,0);
     lightDirection.normalise();
 
