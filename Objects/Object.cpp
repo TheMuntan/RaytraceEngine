@@ -4,9 +4,14 @@
 
 #include "Object.h"
 
-Object::Object(const Coordinate &center, int r, int g, int b, float rotateX, float rotateY, float rotateZ, float scaleX,
+Object::Object(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
                float scaleY, float scaleZ) : center(center), r(r), g(g), b(b), rotateX(rotateX), rotateY(rotateY),
                                                                 rotateZ(rotateZ), scaleX(scaleX), scaleY(scaleY), scaleZ(scaleZ) {
+    rgba.push_back(r);
+    rgba.push_back(g);
+    rgba.push_back(b);
+    rgba.push_back(a);
+
     float temp1Matrix[4][4]; // first index is row, second index is column
     float temp1InvMatrix[4][4];
     float temp2Matrix[4][4]; // first index is row, second index is column
@@ -207,5 +212,22 @@ Coordinate Object::calcRealCoords(float tempX, float tempY, float tempZ, float t
     Coordinate realCoords(newX, newY, newZ, newP);
     return realCoords;
 
+}
+
+
+//vector<float> Object::getShading(Coordinate hitLocation, Coordinate lightDirection) {
+//    return vector<float>();
+//}
+
+Coordinate Object::hit(Ray ray) {
+    return Coordinate();
+}
+
+const vector<float> &Object::getRgba() const {
+    return rgba;
+}
+
+float Object::getA() const {
+    return a;
 }
 

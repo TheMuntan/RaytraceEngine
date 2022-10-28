@@ -23,13 +23,14 @@ using namespace std; // std vector for dynamic vector size
 
 
 int main(int argc, char *argv[]) {
-    Sphere *spheres[3];
+    int totalObjects = 4;
+    Object *objects[totalObjects];
 
     int screenX = 1280, screenY = 720;
 
     Coordinate centerSphere(500.0, 1500.0, 0.0, 1);
-    Sphere sphere(500.0, centerSphere, 1.0,0.1,0.0, 0.0, 0.0, 0.0, 2, 1.0, 1.0);
-    spheres[0] = &sphere;
+    Sphere sphere(500.0, centerSphere, 1.0,0.1,0.0, 1.0, 0.0, 0.0, 0.0, 2, 1.0, 1.0);
+    objects[0] = &sphere;
 
 //    Coordinate originRay(-3, 0, 0, 1);
 //    Coordinate directionRay(-2, 0, 0, 1);
@@ -38,8 +39,8 @@ int main(int argc, char *argv[]) {
 //    Coordinate i1 = sphere.hit(ray1);
 
     Coordinate centerSphere2(-100, 1000, -100, 1);
-    Sphere sphere2(200.0, centerSphere2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    spheres[1] = &sphere2;
+    Sphere sphere2(200.0, centerSphere2, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    objects[1] = &sphere2;
 
 //    Coordinate originRay2(0, 3, 3, 1);
 //    Coordinate directionRay2(1, 3, 3, 1);
@@ -47,9 +48,9 @@ int main(int argc, char *argv[]) {
 //
 //    sphere2.hit(ray2);
 
-    Coordinate centerSphere3(  500.0, 2000.0, 500.0, 1);
-    Sphere sphere3(1000.0, centerSphere3, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    spheres[2] = &sphere3;
+    Coordinate centerSphere3(  500.0, 2500.0, 500.0, 1);
+    Sphere sphere3(1000.0, centerSphere3, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    objects[2] = &sphere3;
 
 //    Coordinate originRay3(0, 3, 3, 1);
 //    Coordinate directionRay3(3, 4, 3, 1);
@@ -57,12 +58,12 @@ int main(int argc, char *argv[]) {
 //
 //    sphere3.hit(ray3);
 
-    Coordinate centerCube1(  0.0, 600.0, 100.0, 1);
-    Cube cube1(centerCube1, 1, 0.0, 1, 0.0, 0.0, 0.0, 100.0, 100.0, 100.0);
-
+    Coordinate centerCube1(  -600.0, 600.0, 200.0, 1);
+    Cube cube1(centerCube1, 1.0, 0.0, 1.0, 1.0, 0.0, 45.0, 0.0, 150.0, 150.0, 150.0);
+    objects[3] = &cube1;
 
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 
     glutInitWindowPosition(80, 80);
     glutInitWindowSize(screenX, screenY);
@@ -83,7 +84,8 @@ int main(int argc, char *argv[]) {
 
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
-    glBegin(GL_POINTS);
+//    glBegin(GL_POINTS);
+    Coordinate lightDirection(0.0,0.0,1.0,0);
     Coordinate eye(0.0, -1000.0, 200.0, 1);
     Coordinate lookPoint(0.0, 1.0, 200.0, 1);
     Coordinate lookVector = lookPoint - eye;
@@ -106,18 +108,20 @@ int main(int argc, char *argv[]) {
 
             Ray screenRay(eye,screenWorldCoordinate);
 
-            Coordinate hits[3];
+            Coordinate hits[totalObjects];
 
-            for (int i=0;i<3;i++) { // check hits with all existing objects for a screen ray and save coordinate
-            Coordinate tempHit = spheres[i]->hit(screenRay);
-            hits[i] = tempHit;
+            for (int i=0;i<totalObjects;i++) { // check hits with all existing objects for a screen ray and save coordinate
+                Coordinate tempHit = objects[i]->hit(screenRay);
+                hits[i] = tempHit;
             }
 
             Coordinate closest(INFINITY,INFINITY,INFINITY,0);
             int closestIndex = -1;
 
-            for (int i=0;i<3;i++) { // find closest hit location
+            for (int i=0;i<totalObjects;i++) { // find closest hit location
                 if (hits[i].isPoint()) { // check if there was a hit with this object
+                    if (closestIndex = -1)
+                        closestIndex = i;
                     if (hits[i].distance(eye) < hits[closestIndex].distance(eye))
                         closestIndex = i;
                 }
@@ -125,20 +129,24 @@ int main(int argc, char *argv[]) {
 
             if (closestIndex!=-1) {
                 glBegin(GL_POINTS);
-                glColor3f(spheres[closestIndex]->getR(), spheres[closestIndex]->getG(), spheres[closestIndex]->getB());
-
-                if ((spheres[closestIndex]->getCenter().distance(eye)-hits[closestIndex].distance(eye))<spheres[closestIndex]->getRadius()/2.0) {
-                    glColor3f(spheres[closestIndex]->getR()/5.0, spheres[closestIndex]->getG()/5.0, spheres[closestIndex]->getB()/5.0);
-//                    glColor4f(spheres[closestIndex]->getR(), spheres[closestIndex]->getG(), spheres[closestIndex]->getB(), 0.1);
-                }
-
-                glVertex2i(c / 2, -r / 2 + screenY);
-            }
-            if (cube1.hit(screenRay).isPoint()) {
-                glColor3f(cube1.getR(), cube1.getG(), cube1.getB());
+                vector<float> shading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
+                glColor3f(shading[0]*shading[3], shading[1]*shading[3], shading[2]*shading[3]);
                 glVertex2i(c / 2, -r / 2 + screenY);
 
+//                Coordinate tempCenter = objects[closestIndex]->getCenter();
+
+//                if ((objects[closestIndex]->getCenter().distance(eye)-hits[closestIndex].distance(eye)) <
+//                        (objects[closestIndex]->getCenter().distance(objects[closestIndex]->hit(Ray (eye, tempCenter-eye))))/2.0) {
+//                    glColor4f(0.0,0.0,0.0,0.0);
+////                    glColor4f(objects[closestIndex]->getR(), objects[closestIndex]->getG(), objects[closestIndex]->getB(), 0.1);
+//                }
+
             }
+//            if (cube1.hit(screenRay).isPoint()) {
+//                glColor3f(cube1.getR(), cube1.getG(), cube1.getB());
+//                glVertex2i(c / 2, -r / 2 + screenY);
+//
+//            }
 
         }
         glEnd();
@@ -146,14 +154,12 @@ int main(int argc, char *argv[]) {
 
     }
 
-    cout << endl << "Done scanning!";
+    cout << endl << "Drawing complete!" << endl;
 
-    glEnd();
+//    glEnd();
     glFlush();
 
-    while (1)
-        ;
-
+    glutMainLoop();
 
     return 0;
 }

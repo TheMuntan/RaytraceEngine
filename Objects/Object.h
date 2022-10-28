@@ -5,6 +5,7 @@
 #ifndef RAYTRACEENGINE_OBJECT_H
 #define RAYTRACEENGINE_OBJECT_H
 
+#include <vector>
 #include "../Coordinate.h"
 #include "cmath"
 #include "../Ray.h"
@@ -13,15 +14,18 @@ using namespace std;
 
 class Object {
     Coordinate center;
-    int r,g,b;
+    float r,g,b,a;
     float rotateX, rotateY, rotateZ;
     float scaleX, scaleY, scaleZ;
+    vector<float> rgba;
 public:
     float matrix[4][4];
     float invMatrix[4][4];
 
-    Object(const Coordinate &center, int r, int g, int b, float rotateX, float rotateY, float rotateZ, float scaleX,
+    Object(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
            float scaleY, float scaleZ);
+
+    float getA() const;
 
     const Coordinate getCenter() const;
 
@@ -33,6 +37,8 @@ public:
 
     void setRotateX(float rotateX);
 
+    const vector<float> &getRgba() const;
+
     void setRotateY(float rotateY);
 
     void setRotateZ(float rotateZ);
@@ -40,6 +46,10 @@ public:
     Ray invRay(Ray ray);
 
     Coordinate calcRealCoords(float tempX, float tempY, float tempZ, float tempP);
+
+    virtual Coordinate hit(Ray ray);
+
+    virtual vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) =0;
 };
 
 

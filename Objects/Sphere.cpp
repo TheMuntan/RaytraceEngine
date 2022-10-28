@@ -5,8 +5,8 @@
 #include "Sphere.h"
 #include "cmath"
 
-Sphere::Sphere(float radius, const Coordinate &center, int r, int g, int b, float rotateX, float rotateY, float rotateZ, float scaleX,
-               float scaleY, float scaleZ) : Object(center, r, g, b, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius), radius(radius) {}
+Sphere::Sphere(float radius, const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
+               float scaleY, float scaleZ) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius), radius(radius) {}
 
 Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     Coordinate failedHit(0, 0, 0, 0);
@@ -58,4 +58,20 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
 
 float Sphere::getRadius() const {
     return radius;
-};
+}
+
+vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirection) {
+    vector<float> shading = getRgba();
+    Coordinate normDirection (hitLocation-getCenter());
+    normDirection.normalise();
+
+    float angleLight = acos(normDirection.dot(lightDirection));
+    if (angleLight > 1.5708) { // angle too big
+        shading[3] = 0;
+    } else {
+        shading[3] = shading[3] * (1 - (angleLight/1.5708));
+    }
+
+    return shading;
+}
+

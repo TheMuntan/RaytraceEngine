@@ -14,12 +14,14 @@ using namespace std;
 class Sphere : public Object {
     float radius;
 public:
-    Sphere(float radius, const Coordinate &center, int r, int g, int b, float rotateX, float rotateY, float rotateZ, float scaleX,
+    Sphere(float radius, const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
            float scaleY, float scaleZ);
 
     float getRadius() const;
 
-    Coordinate hit(Ray ray);
+    Coordinate hit(Ray ray) override;
+
+    vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) override;
 
 };
 
