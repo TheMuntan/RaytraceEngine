@@ -4,6 +4,10 @@
 
 #include "Sphere.h"
 #include "cmath"
+#include <iostream>
+
+
+using namespace std;
 
 Sphere::Sphere(float radius, const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
                float scaleY, float scaleZ) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius), radius(radius) {}
@@ -62,14 +66,17 @@ float Sphere::getRadius() const {
 
 vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
+    shading[3] = 1.0;
     Coordinate normDirection (hitLocation-getCenter());
     normDirection.normalise();
 
     float angleLight = acos(normDirection.dot(lightDirection));
-    if (angleLight > 1.5708) { // angle too big
-        shading[3] = 0;
+
+
+    if (angleLight > 1.5708) { // angle too big default=1.5708
+        shading[3] = 0.0;
     } else {
-        shading[3] = shading[3] * (1 - (angleLight/1.5708));
+        shading[3] = 1.0 - (angleLight/1.5708);
     }
 
     return shading;

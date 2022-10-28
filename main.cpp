@@ -85,7 +85,9 @@ int main(int argc, char *argv[]) {
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
 //    glBegin(GL_POINTS);
-    Coordinate lightDirection(0.0,0.0,1.0,0);
+    Coordinate lightDirection(-7.0,-5.0,-10.0,0);
+    lightDirection.normalise();
+
     Coordinate eye(0.0, -1000.0, 200.0, 1);
     Coordinate lookPoint(0.0, 1.0, 200.0, 1);
     Coordinate lookVector = lookPoint - eye;
@@ -103,10 +105,17 @@ int main(int argc, char *argv[]) {
 
     for (int r = 0; r < screenY*2; r++) {
         for (int c = 0; c < screenX*2; c++) {
+            glBegin(GL_POINTS);
+
             Coordinate screenWorld1 = screenCenter + (u * (c/float(screenX) - 1));
             Coordinate screenWorldCoordinate = screenWorld1 + (v * (r/float(screenY) - 1));
 
             Ray screenRay(eye,screenWorldCoordinate);
+
+//            if ()
+//                glColor3f(1.0,1.0,1.0);
+//                glVertex2i(c / 2, -r / 2 + screenY);
+
 
             Coordinate hits[totalObjects];
 
@@ -128,8 +137,10 @@ int main(int argc, char *argv[]) {
             }
 
             if (closestIndex!=-1) {
-                glBegin(GL_POINTS);
                 vector<float> shading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
+//                cout << endl << "R: " << shading[0] << " G: " << shading[1] << " B: " << shading[2] << " Alpha: " << shading[3] << endl;
+//                cout << endl << "R: " << shading[0]*shading[3] << " G: " << shading[1]*shading[3] << " B: " << shading[2]*shading[3] << endl;
+
                 glColor3f(shading[0]*shading[3], shading[1]*shading[3], shading[2]*shading[3]);
                 glVertex2i(c / 2, -r / 2 + screenY);
 
