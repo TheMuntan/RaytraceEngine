@@ -28,8 +28,20 @@ Coordinate Plane::hit(Ray ray) {
 
 vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
+    shading = {1.0, 1.0, 1.0, 1.0};
 
-    vector<float> test = {1.0, 1.0, 1.0, 1.0};
+    float tempX = (invMatrix[0][0] * hitLocation.getX() + invMatrix[0][1] * hitLocation.getY() +
+                   invMatrix[0][2] * hitLocation.getZ() + invMatrix[0][3] * hitLocation.isPoint());
+    float tempY = (invMatrix[1][0] * hitLocation.getX() + invMatrix[1][1] * hitLocation.getY() +
+                   invMatrix[1][2] * hitLocation.getZ() + invMatrix[1][3] * hitLocation.isPoint());
 
-    return test;
+    if (sin(tempX) > 0.0 and sin(tempY) > 0.0 or (sin(tempX) < 0.0 and sin(tempY) < 0.0)) {
+        shading = {1.0, 1.0, 1.0, 1.0};
+
+    } else if (sin(tempX) > 0.0 and sin(tempY) < 0.0 or (sin(tempX) < 0.0 and sin(tempY) > 0.0)) {
+        shading = {0.0, 1.0, 1.0, 1.0};
+    }
+
+
+    return shading;
 }

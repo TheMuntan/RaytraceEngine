@@ -178,8 +178,6 @@ const Coordinate Object::getCenter() const {
 }
 
 Ray Object::invRay(Ray ray) {
-    Coordinate failedHit(0, 0, 0, 0);
-
     float tempX = (invMatrix[0][0] * ray.getOrigin().getX() + invMatrix[0][1] * ray.getOrigin().getY() +
                    invMatrix[0][2] * ray.getOrigin().getZ() + invMatrix[0][3] * ray.getOrigin().isPoint());
     float tempY = (invMatrix[1][0] * ray.getOrigin().getX() + invMatrix[1][1] * ray.getOrigin().getY() +

@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     int screenX = 1280, screenY = 720;
 
     Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
-    Plane plane1(planeCenter1, 1.0,1.0,1.0, 1.0, 20.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    Plane plane1(planeCenter1, 1.0,1.0,1.0, 1.0, 200.0, 0.0, 0.0, 1.0, 1.0, 1.0);
     objects[0] = &plane1;
 
     Coordinate centerSphere1(500.0, 1500.0, 0.0, 1);
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
 
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
-    Coordinate lightDirection(-7.0,-5.0,-10.0,0);
+    Coordinate lightDirection(-7.0,-5.0,-10.0,0); // vector of general light aka sunlight
     lightDirection.normalise();
 
     Coordinate eye(0.0, -1000.0, 200.0, 1);
@@ -116,11 +116,6 @@ int main(int argc, char *argv[]) {
 
             Ray screenRay(eye,screenWorldCoordinate);
 
-//            if ()
-//                glColor3f(1.0,1.0,1.0);
-//                glVertex2i(c / 2, -r / 2 + screenY);
-
-
             Coordinate hits[totalObjects];
 
             for (int i=0;i<totalObjects;i++) { // check hits with all existing objects for a screen ray and save coordinate
@@ -142,27 +137,11 @@ int main(int argc, char *argv[]) {
 
             if (closestIndex!=-1) {
                 vector<float> shading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
-//                cout << endl << "R: " << shading[0] << " G: " << shading[1] << " B: " << shading[2] << " Alpha: " << shading[3] << endl;
-//                cout << endl << "R: " << shading[0]*shading[3] << " G: " << shading[1]*shading[3] << " B: " << shading[2]*shading[3] << endl;
-
                 glColor3f(shading[0]*shading[3], shading[1]*shading[3], shading[2]*shading[3]);
-                glVertex2i(c / 2, -r / 2 + screenY);
-
-//                Coordinate tempCenter = objects[closestIndex]->getCenter();
-
-//                if ((objects[closestIndex]->getCenter().distance(eye)-hits[closestIndex].distance(eye)) <
-//                        (objects[closestIndex]->getCenter().distance(objects[closestIndex]->hit(Ray (eye, tempCenter-eye))))/2.0) {
-//                    glColor4f(0.0,0.0,0.0,0.0);
-////                    glColor4f(objects[closestIndex]->getR(), objects[closestIndex]->getG(), objects[closestIndex]->getB(), 0.1);
-//                }
-
+            } else {
+                glColor3f(0, 0.7, 1.0);
             }
-//            if (cube1.hit(screenRay).isPoint()) {
-//                glColor3f(cube1.getR(), cube1.getG(), cube1.getB());
-//                glVertex2i(c / 2, -r / 2 + screenY);
-//
-//            }
-
+            glVertex2i(c / 2, -r / 2 + screenY);
         }
         glEnd();
         glFlush();
@@ -171,7 +150,6 @@ int main(int argc, char *argv[]) {
 
     cout << endl << "Drawing complete!" << endl;
 
-//    glEnd();
     glFlush();
 
     glutMainLoop();

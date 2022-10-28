@@ -88,9 +88,54 @@ Coordinate Cube::hit(Ray ray) {
 
 vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
-//    hitLocation / 5.0;
 
-    vector<float> test = {0.0, 0.0, 1.0, 1.0};
+    float tempX = (invMatrix[0][0] * hitLocation.getX() + invMatrix[0][1] * hitLocation.getY() +
+                   invMatrix[0][2] * hitLocation.getZ() + invMatrix[0][3] * hitLocation.isPoint());
+    float tempY = (invMatrix[1][0] * hitLocation.getX() + invMatrix[1][1] * hitLocation.getY() +
+                   invMatrix[1][2] * hitLocation.getZ() + invMatrix[1][3] * hitLocation.isPoint());
+    float tempZ = (invMatrix[2][0] * hitLocation.getX() + invMatrix[2][1] * hitLocation.getY() +
+                   invMatrix[2][2] * hitLocation.getZ() + invMatrix[2][3] * hitLocation.isPoint());
 
-    return test;
+    Coordinate norm;
+    if (tempX = 1) {
+        Coordinate normTemp(1.0,0.0,0.0,0);
+        norm = normTemp;
+    } else if (tempX = -1) {
+        Coordinate normTemp(-1.0,0.0,0.0,0);
+        norm = normTemp;
+    } else if (tempY = 1) {
+        Coordinate normTemp(0.0,1.0,0.0,0);
+        norm = normTemp;
+    } else if (tempY = -1) {
+        Coordinate normTemp(0.0,-1.0,0.0,0);
+        norm = normTemp;
+    } else if (tempZ = 1) {
+        Coordinate normTemp(0.0,0.0,1.0,0);
+        norm = normTemp;
+    } else if (tempZ = -1) {
+        Coordinate normTemp(0.0,0.0,-1.0,0);
+        norm = normTemp;
+    }
+
+    tempX = (invMatrix[0][0] * norm.getX() + invMatrix[0][1] * norm.getY() +
+             invMatrix[0][2] * norm.getZ() + invMatrix[0][3] * norm.isPoint());
+    tempY = (invMatrix[1][0] * norm.getX() + invMatrix[1][1] * norm.getY() +
+             invMatrix[1][2] * norm.getZ() + invMatrix[1][3] * norm.isPoint());
+    tempZ = (invMatrix[2][0] * norm.getX() + invMatrix[2][1] * norm.getY() +
+             invMatrix[2][2] * norm.getZ() + invMatrix[2][3] * norm.isPoint());
+    Coordinate normDirection(tempX, tempY, tempZ, 0);
+
+    shading[3] = 1.0;
+    normDirection.normalise();
+
+    float angleLight = acos(normDirection.dot(lightDirection));
+
+
+    if (angleLight > 1.5708) { // angle too big default=1.5708
+        shading[3] = 0.0;
+    } else {
+        shading[3] = 1.0 - (angleLight/1.5708);
+    }
+
+    return shading;
 }
