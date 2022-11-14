@@ -13,7 +13,6 @@
 using namespace std;
 
 class Cube : public Object {
-    array<float, 6> t,u,v;
 
 public:
     Cube(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
@@ -23,6 +22,7 @@ public:
 
     vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) override;
 
+    Coordinate getNorm(Coordinate hitLocation);
 };
 
 

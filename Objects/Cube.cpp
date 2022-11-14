@@ -10,6 +10,7 @@ Cube::Cube(const Coordinate &center, float r, float g, float b, float a, float r
 Coordinate Cube::hit(Ray ray) {
     Coordinate failedHit(0, 0, 0, 0);
     Ray genRay = this->invRay(ray);
+    array<float, 6> t,u,v;
 
     // check top and bottom plane
         t[0] = (-genRay.getOrigin().getZ() - 0.5) / genRay.getDirection().getZ(); // find t for hit with z = -0.5 plane
@@ -60,9 +61,7 @@ Coordinate Cube::hit(Ray ray) {
     return failedHit;
 }
 
-vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection) {
-    vector<float> shading = getRgba();
-
+Coordinate Cube::getNorm(Coordinate hitLocation) {
     float tempX = (invMatrix[0][0] * hitLocation.getX() + invMatrix[0][1] * hitLocation.getY() +
                    invMatrix[0][2] * hitLocation.getZ() + invMatrix[0][3] * hitLocation.isPoint());
     float tempY = (invMatrix[1][0] * hitLocation.getX() + invMatrix[1][1] * hitLocation.getY() +
@@ -71,39 +70,44 @@ vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection
                    invMatrix[2][2] * hitLocation.getZ() + invMatrix[2][3] * hitLocation.isPoint());
 
     Coordinate norm;
-    if (tempX > 0.99) {
+    if (tempX > 0.49) {
         Coordinate normTemp(0.5,0.0,0.0,0);
         norm = normTemp;
-    } else if (tempX < -0.99) {
+    } else if (tempX < -0.49) {
         Coordinate normTemp(-0.5,0.0,0.0,0);
         norm = normTemp;
-    } else if (tempY > 0.99) {
+    } else if (tempY > 0.49) {
         Coordinate normTemp(0.0,0.5,0.0,0);
         norm = normTemp;
-    } else if (tempY < -0.99) {
+    } else if (tempY < -0.49) {
         Coordinate normTemp(0.0,-0.5,0.0,0);
         norm = normTemp;
-    } else if (tempZ > 0.99) {
+    } else if (tempZ > 0.49) {
         Coordinate normTemp(0.0,0.0,0.5,0);
         norm = normTemp;
-    } else if (tempZ < -0.99) {
+    } else if (tempZ < -0.49) {
         Coordinate normTemp(0.0,0.0,-0.5,0);
         norm = normTemp;
     }
 
-    tempX = (invMatrix[0][0] * norm.getX() + invMatrix[0][1] * norm.getY() +
-             invMatrix[0][2] * norm.getZ() + invMatrix[0][3] * norm.isPoint());
-    tempY = (invMatrix[1][0] * norm.getX() + invMatrix[1][1] * norm.getY() +
-             invMatrix[1][2] * norm.getZ() + invMatrix[1][3] * norm.isPoint());
-    tempZ = (invMatrix[2][0] * norm.getX() + invMatrix[2][1] * norm.getY() +
-             invMatrix[2][2] * norm.getZ() + invMatrix[2][3] * norm.isPoint());
+    tempX = (matrix[0][0] * norm.getX() + matrix[0][1] * norm.getY() +
+             matrix[0][2] * norm.getZ() + matrix[0][3] * norm.isPoint());
+    tempY = (matrix[1][0] * norm.getX() + matrix[1][1] * norm.getY() +
+             matrix[1][2] * norm.getZ() + matrix[1][3] * norm.isPoint());
+    tempZ = (matrix[2][0] * norm.getX() + matrix[2][1] * norm.getY() +
+             matrix[2][2] * norm.getZ() + matrix[2][3] * norm.isPoint());
     Coordinate normDirection(tempX, tempY, tempZ, 0);
-
-    shading[3] = 1.0;
     normDirection.normalise();
 
-    float angleLight = acos(normDirection.dot(lightDirection));
+    return normDirection;
+}
 
+vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection) {
+    vector<float> shading = getRgba();
+
+    Coordinate normDirection = getNorm(hitLocation);
+
+    float angleLight = acos(normDirection.dot(lightDirection));
 
     if (angleLight > 2) { // angle too big default=1.5708
         shading[3] = 0.001;

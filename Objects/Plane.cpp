@@ -28,7 +28,6 @@ Coordinate Plane::hit(Ray ray) {
 
 vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
-    shading = {1.0, 1.0, 1.0, 1.0};
 
     float tempX = (invMatrix[0][0] * hitLocation.getX() + invMatrix[0][1] * hitLocation.getY() +
                    invMatrix[0][2] * hitLocation.getZ() + invMatrix[0][3] * hitLocation.isPoint());
@@ -41,6 +40,23 @@ vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirectio
 
     } else if (sin(tempX/squareSize) > 0.0 and sin(tempY/squareSize) < 0.0 or (sin(tempX/squareSize) < 0.0 and sin(tempY/squareSize) > 0.0)) {
         shading = {189/255.0, 58/255.0, 167/255.0, 1.0};
+    }
+
+    Coordinate norm(0.0, 0.0, 1.0, 0);
+    tempX = (matrix[0][0] * norm.getX() + matrix[0][1] * norm.getY() +
+             matrix[0][2] * norm.getZ() + matrix[0][3] * norm.isPoint());
+    tempY = (matrix[1][0] * norm.getX() + matrix[1][1] * norm.getY() +
+             matrix[1][2] * norm.getZ() + matrix[1][3] * norm.isPoint());
+    float tempZ = (matrix[2][0] * norm.getX() + matrix[2][1] * norm.getY() +
+             matrix[2][2] * norm.getZ() + matrix[2][3] * norm.isPoint());
+    Coordinate normDirection(tempX, tempY, tempZ, 0);
+
+    float angleLight = acos(normDirection.dot(lightDirection));
+
+    if (angleLight > 2) { // angle too big default=1.5708
+        shading[3] = 0.001;
+    } else {
+        shading[3] = 1.0 - (angleLight/2);
     }
 
 
