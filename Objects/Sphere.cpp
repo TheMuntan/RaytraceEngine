@@ -14,7 +14,7 @@ Sphere::Sphere(float radius, const Coordinate &center, float r, float g, float b
 
 Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     Coordinate failedHit(0, 0, 0, 0);
-    Ray genRay = this->invRay(ray);
+    Ray genRay(invCoordinate(ray.getOrigin()), invCoordinate(ray.getDirection()));
 
     float A = pow(genRay.getDirection().getX(), 2) + pow(genRay.getDirection().getY(), 2) +
               pow(genRay.getDirection().getZ(), 2);
@@ -44,7 +44,8 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
         float tempY = genRay.getOrigin().getY() + genRay.getDirection().getY() * t1;
         float tempZ = genRay.getOrigin().getZ() + genRay.getDirection().getZ() * t1;
 
-        Coordinate i1 = calcRealCoords(tempX, tempY, tempZ ,1);
+        Coordinate tempI1(tempX, tempY, tempZ ,1);
+        Coordinate i1 = transformCoordinate(tempI1);
         return i1;
     } else {
 
@@ -52,27 +53,34 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
         float tempY = genRay.getOrigin().getY() + genRay.getDirection().getY() * t2;
         float tempZ = genRay.getOrigin().getZ() + genRay.getDirection().getZ() * t2;
 
-
-        Coordinate i2 = calcRealCoords(tempX, tempY, tempZ ,1);
+        Coordinate tempI2(tempX, tempY, tempZ ,1);
+        Coordinate i2 = transformCoordinate(tempI2);
         return i2;
     }
     return failedHit;
 }
 
-float Sphere::getRadius() const {
-    return radius;
+
+Coordinate Sphere::getNorm(Coordinate hitLocation) {
+
+    Coordinate invLocation = invCoordinate(hitLocation);
+    Coordinate center(0.0,0.0,0.0,1);
+    Coordinate invNorm = invLocation - center;
+    invNorm.normalise();
+    Coordinate norm = transformCoordinate(invNorm);
+    norm.normalise();
+    return norm;
 }
 
 vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
-    shading[3] = 1.0;
-    Coordinate normDirection (hitLocation-getCenter());
-    normDirection.normalise();
+
+    Coordinate normDirection = getNorm(hitLocation);;
 
     float angleLight = acos(normDirection.dot(lightDirection));
 
 
-    if (angleLight > 1.5708) { // angle too big default=1.5708
+    if (angleLight > 2) { // angle too big default=1.5708
         shading[3] = 0.001;
     } else {
         shading[3] = 1.0 - (angleLight/1.5708);

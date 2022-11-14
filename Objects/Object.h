@@ -5,6 +5,7 @@
 #ifndef RAYTRACEENGINE_OBJECT_H
 #define RAYTRACEENGINE_OBJECT_H
 
+#include <iostream>
 #include <vector>
 #include "../Coordinate.h"
 #include "cmath"
@@ -43,13 +44,17 @@ public:
 
     void setRotateZ(float rotateZ);
 
-    Ray invRay(Ray ray);
+//    Ray invRay(Ray ray);
 
-    Coordinate calcRealCoords(float tempX, float tempY, float tempZ, float tempP);
+//    Coordinate calcRealCoords(float tempX, float tempY, float tempZ, float tempP);
 
     virtual Coordinate hit(Ray ray);
 
     virtual vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) =0;
+
+    Coordinate invCoordinate(Coordinate coord);
+
+    Coordinate transformCoordinate(Coordinate coord);
 };
 
 

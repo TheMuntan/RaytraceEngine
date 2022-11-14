@@ -17,12 +17,12 @@ public:
     Sphere(float radius, const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
            float scaleY, float scaleZ);
 
-    float getRadius() const;
 
     Coordinate hit(Ray ray) override;
 
     vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) override;
 
+    Coordinate getNorm(Coordinate hitLocation);
 };
 
 #endif //RAYTRACEENGINE_SPHERE_H

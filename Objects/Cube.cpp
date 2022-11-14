@@ -9,7 +9,7 @@ Cube::Cube(const Coordinate &center, float r, float g, float b, float a, float r
 
 Coordinate Cube::hit(Ray ray) {
     Coordinate failedHit(0, 0, 0, 0);
-    Ray genRay = this->invRay(ray);
+    Ray genRay(invCoordinate(ray.getOrigin()), invCoordinate(ray.getDirection()));
     array<float, 6> t,u,v;
 
     // check top and bottom plane
@@ -54,7 +54,8 @@ Coordinate Cube::hit(Ray ray) {
         float tempY = genRay.getOrigin().getY() + genRay.getDirection().getY() * tempT;
         float tempZ = genRay.getOrigin().getZ() + genRay.getDirection().getZ() * tempT;
 
-        Coordinate i1 = calcRealCoords(tempX, tempY, tempZ ,1);
+        Coordinate tempI1(tempX, tempY, tempZ ,1);
+        Coordinate i1 = transformCoordinate(tempI1);
         return i1;
     }
 
@@ -62,41 +63,30 @@ Coordinate Cube::hit(Ray ray) {
 }
 
 Coordinate Cube::getNorm(Coordinate hitLocation) {
-    float tempX = (invMatrix[0][0] * hitLocation.getX() + invMatrix[0][1] * hitLocation.getY() +
-                   invMatrix[0][2] * hitLocation.getZ() + invMatrix[0][3] * hitLocation.isPoint());
-    float tempY = (invMatrix[1][0] * hitLocation.getX() + invMatrix[1][1] * hitLocation.getY() +
-                   invMatrix[1][2] * hitLocation.getZ() + invMatrix[1][3] * hitLocation.isPoint());
-    float tempZ = (invMatrix[2][0] * hitLocation.getX() + invMatrix[2][1] * hitLocation.getY() +
-                   invMatrix[2][2] * hitLocation.getZ() + invMatrix[2][3] * hitLocation.isPoint());
+    Coordinate invLocation = invCoordinate(hitLocation);
 
     Coordinate norm;
-    if (tempX > 0.49) {
+    if (invLocation.getX() > 0.49) {
         Coordinate normTemp(0.5,0.0,0.0,0);
         norm = normTemp;
-    } else if (tempX < -0.49) {
+    } else if (invLocation.getX() < -0.49) {
         Coordinate normTemp(-0.5,0.0,0.0,0);
         norm = normTemp;
-    } else if (tempY > 0.49) {
+    } else if (invLocation.getY() > 0.49) {
         Coordinate normTemp(0.0,0.5,0.0,0);
         norm = normTemp;
-    } else if (tempY < -0.49) {
+    } else if (invLocation.getY() < -0.49) {
         Coordinate normTemp(0.0,-0.5,0.0,0);
         norm = normTemp;
-    } else if (tempZ > 0.49) {
+    } else if (invLocation.getZ() > 0.49) {
         Coordinate normTemp(0.0,0.0,0.5,0);
         norm = normTemp;
-    } else if (tempZ < -0.49) {
+    } else if (invLocation.getZ() < -0.49) {
         Coordinate normTemp(0.0,0.0,-0.5,0);
         norm = normTemp;
     }
 
-    tempX = (matrix[0][0] * norm.getX() + matrix[0][1] * norm.getY() +
-             matrix[0][2] * norm.getZ() + matrix[0][3] * norm.isPoint());
-    tempY = (matrix[1][0] * norm.getX() + matrix[1][1] * norm.getY() +
-             matrix[1][2] * norm.getZ() + matrix[1][3] * norm.isPoint());
-    tempZ = (matrix[2][0] * norm.getX() + matrix[2][1] * norm.getY() +
-             matrix[2][2] * norm.getZ() + matrix[2][3] * norm.isPoint());
-    Coordinate normDirection(tempX, tempY, tempZ, 0);
+    Coordinate normDirection = transformCoordinate(norm);
     normDirection.normalise();
 
     return normDirection;

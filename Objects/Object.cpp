@@ -74,8 +74,8 @@ Object::Object(const Coordinate &center, float r, float g, float b, float a, flo
     invScaleMatrix[1][1] = 1/float(scaleY);
     invScaleMatrix[2][2] = 1/float(scaleZ);
     
-    scaleMatrix[3][3] = 1;
-    invScaleMatrix[3][3] = 1;
+    scaleMatrix[3][3] = 1.0;
+    invScaleMatrix[3][3] = 1.0;
 
     float thetaX = ((rotateX) * (M_PI / 180.0)); // turn degrees into radians
     float thetaY = ((rotateY) * (M_PI / 180.0)); // turn degrees into radians
@@ -177,45 +177,32 @@ const Coordinate Object::getCenter() const {
     return center;
 }
 
-Ray Object::invRay(Ray ray) {
-    float tempX = (invMatrix[0][0] * ray.getOrigin().getX() + invMatrix[0][1] * ray.getOrigin().getY() +
-                   invMatrix[0][2] * ray.getOrigin().getZ() + invMatrix[0][3] * ray.getOrigin().isPoint());
-    float tempY = (invMatrix[1][0] * ray.getOrigin().getX() + invMatrix[1][1] * ray.getOrigin().getY() +
-                   invMatrix[1][2] * ray.getOrigin().getZ() + invMatrix[1][3] * ray.getOrigin().isPoint());
-    float tempZ = (invMatrix[2][0] * ray.getOrigin().getX() + invMatrix[2][1] * ray.getOrigin().getY() +
-                   invMatrix[2][2] * ray.getOrigin().getZ() + invMatrix[2][3] * ray.getOrigin().isPoint());
-    float tempP = (invMatrix[3][0] * ray.getOrigin().getX() + invMatrix[3][1] * ray.getOrigin().getY() +
-                   invMatrix[3][2] * ray.getOrigin().getZ() + invMatrix[3][3] * ray.getOrigin().isPoint());
-    Coordinate tempOrig(tempX, tempY, tempZ, tempP);
-    tempX = (invMatrix[0][0] * ray.getDirection().getX() + invMatrix[0][1] * ray.getDirection().getY() +
-             invMatrix[0][2] * ray.getDirection().getZ() + invMatrix[0][3] * ray.getDirection().isPoint());
-    tempY = (invMatrix[1][0] * ray.getDirection().getX() + invMatrix[1][1] * ray.getDirection().getY() +
-             invMatrix[1][2] * ray.getDirection().getZ() + invMatrix[1][3] * ray.getDirection().isPoint());
-    tempZ = (invMatrix[2][0] * ray.getDirection().getX() + invMatrix[2][1] * ray.getDirection().getY() +
-             invMatrix[2][2] * ray.getDirection().getZ() + invMatrix[2][3] * ray.getDirection().isPoint());
-    tempP = (invMatrix[3][0] * ray.getDirection().getX() + invMatrix[3][1] * ray.getDirection().getY() +
-             invMatrix[3][2] * ray.getDirection().getZ() + invMatrix[3][3] * ray.getDirection().isPoint());
-    Coordinate tempDir(tempX, tempY, tempZ, tempP);
-
-    Ray newRay(tempOrig, tempDir);
-    return newRay;
+Coordinate Object::invCoordinate(Coordinate coord) {
+    float tempX = (invMatrix[0][0] * coord.getX() + invMatrix[0][1] * coord.getY() +
+                   invMatrix[0][2] * coord.getZ() + invMatrix[0][3] * coord.isPoint());
+    float tempY = (invMatrix[1][0] * coord.getX() + invMatrix[1][1] * coord.getY() +
+                   invMatrix[1][2] * coord.getZ() + invMatrix[1][3] * coord.isPoint());
+    float tempZ = (invMatrix[2][0] * coord.getX() + invMatrix[2][1] * coord.getY() +
+                   invMatrix[2][2] * coord.getZ() + invMatrix[2][3] * coord.isPoint());
+    float tempP = (invMatrix[3][0] * coord.getX() + invMatrix[3][1] * coord.getY() +
+                   invMatrix[3][2] * coord.getZ() + invMatrix[3][3] * coord.isPoint());
+    Coordinate invCoord(tempX, tempY, tempZ, tempP);
+    return invCoord;
 }
 
-Coordinate Object::calcRealCoords(float tempX, float tempY, float tempZ, float tempP) {
-    float newX = (matrix[0][0] * tempX + matrix[0][1] * tempY + matrix[0][2] * tempZ + matrix[0][3] * tempP);
-    float newY = (matrix[1][0] * tempX + matrix[1][1] * tempY + matrix[1][2] * tempZ + matrix[1][3] * tempP);
-    float newZ = (matrix[2][0] * tempX + matrix[2][1] * tempY + matrix[2][2] * tempZ + matrix[2][3] * tempP);
-    float newP = (matrix[3][0] * tempX + matrix[3][1] * tempY + matrix[3][2] * tempZ + matrix[3][3] * tempP);
-
-    Coordinate realCoords(newX, newY, newZ, newP);
-    return realCoords;
-
+Coordinate Object::transformCoordinate(Coordinate invCoord) {
+    float tempX = (matrix[0][0] * invCoord.getX() + matrix[0][1] * invCoord.getY() +
+                   matrix[0][2] * invCoord.getZ() + matrix[0][3] * invCoord.isPoint());
+    float tempY = (matrix[1][0] * invCoord.getX() + matrix[1][1] * invCoord.getY() +
+                   matrix[1][2] * invCoord.getZ() + matrix[1][3] * invCoord.isPoint());
+    float tempZ = (matrix[2][0] * invCoord.getX() + matrix[2][1] * invCoord.getY() +
+                   matrix[2][2] * invCoord.getZ() + matrix[2][3] * invCoord.isPoint());
+    float tempP = (matrix[3][0] * invCoord.getX() + matrix[3][1] * invCoord.getY() +
+                   matrix[3][2] * invCoord.getZ() + matrix[3][3] * invCoord.isPoint());
+    Coordinate coord(tempX, tempY, tempZ, tempP);
+    return coord;
 }
 
-
-//vector<float> Object::getShading(Coordinate hitLocation, Coordinate lightDirection) {
-//    return vector<float>();
-//}
 
 Coordinate Object::hit(Ray ray) {
     return Coordinate();

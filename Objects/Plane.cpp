@@ -10,7 +10,7 @@ Plane::Plane(const Coordinate &center, float r, float g, float b, float a, float
 
 Coordinate Plane::hit(Ray ray) {
     Coordinate failedHit(0, 0, 0, 0);
-    Ray genRay = this->invRay(ray);
+    Ray genRay(invCoordinate(ray.getOrigin()), invCoordinate(ray.getDirection()));
 
     float t = -genRay.getOrigin().getZ() / genRay.getDirection().getZ();
 
@@ -19,7 +19,8 @@ Coordinate Plane::hit(Ray ray) {
         float tempY = genRay.getOrigin().getY() + genRay.getDirection().getY() * t;
         float tempZ = genRay.getOrigin().getZ() + genRay.getDirection().getZ() * t;
 
-        Coordinate i1 = calcRealCoords(tempX, tempY, tempZ ,1);
+        Coordinate tempI1(tempX, tempY, tempZ ,1);
+        Coordinate i1 = transformCoordinate(tempI1);
         return i1;
     }
 

@@ -24,7 +24,7 @@ using namespace std; // std vector for dynamic vector size
 
 
 int main(int argc, char *argv[]) {
-    int totalObjects = 6;
+    int totalObjects = 2;
     Object *objects[totalObjects];
 
     int screenX = 1280, screenY = 720;
@@ -33,25 +33,25 @@ int main(int argc, char *argv[]) {
     Plane plane1(planeCenter1, 1.0,1.0,1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
     objects[0] = &plane1;
 
-    Coordinate centerSphere1(0.0, 300.0, 400.0, 1);
-    Sphere sphere1(300.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    Coordinate centerSphere1(200.0, 300.0, 400.0, 1);
+    Sphere sphere1(300.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 180.0, 0.0, 5.0, 5.0, 1.0);
     objects[1] = &sphere1;
 
-    Coordinate centerSphere2(300, 350, 160, 1);
-    Sphere sphere2(150.0, centerSphere2, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    objects[2] = &sphere2;
-
-    Coordinate centerSphere3(  1500.0, 2500.0, 1300.0, 1);
-    Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    objects[3] = &sphere3;
-
-    Coordinate centerCube1(  -600.0, 600.0, 300.0, 1);
-    Cube cube1(centerCube1, 66/255.0, 135/255.0, 245/255.0, 1.0, 0.0, 0.0, 0.0, 150.0, 150.0, 150.0);
-    objects[4] = &cube1;
-
-    Coordinate centerCube2(  -1600.0, 400.0, 700.0, 1);
-    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 20.0, 0.0, 0.0, 500.0, 500.0, 500.0);
-    objects[5] = &cube2;
+//    Coordinate centerSphere2(300, 350, 160, 1);
+//    Sphere sphere2(150.0, centerSphere2, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+//    objects[2] = &sphere2;
+//
+//    Coordinate centerSphere3(  1500.0, 2500.0, 1300.0, 1);
+//    Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+//    objects[3] = &sphere3;
+//
+//    Coordinate centerCube1(  -600.0, 600.0, 300.0, 1);
+//    Cube cube1(centerCube1, 66/255.0, 135/255.0, 245/255.0, 1.0, 0.0, 0.0, 0.0, 150.0, 150.0, 150.0);
+//    objects[4] = &cube1;
+//
+//    Coordinate centerCube2(  -1600.0, 400.0, 700.0, 1);
+//    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 20.0, 0.0, 0.0, 500.0, 500.0, 500.0);
+//    objects[5] = &cube2;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     int shadingFactor = 4;
 //    Coordinate lightDirection(-0.0,-0.0,1.0,0); // vector of general light aka sunlight
 //    lightDirection.normalise();
-    Coordinate lightPosition(1000.0,-0.0,3000.0,1); // point light coordinate
+    Coordinate lightPosition(0.0,300.0,3000.0,1); // point light coordinate
 
     Coordinate eye(0.0, -2000.0, 2000.0, 1);
     Coordinate lookPoint(0.0, 200.0, 200.0, 1);
