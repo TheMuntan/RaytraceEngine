@@ -27,7 +27,6 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
 
     if (discrim < 0) {
         //cout << endl << "No hit." << endl;
-        Coordinate temp(0, 0, 0, 0);
         return failedHit; //returns a coordinate with 0 as the last value when no hit is found
     }
 

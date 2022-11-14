@@ -33,8 +33,8 @@ int main(int argc, char *argv[]) {
     Plane plane1(planeCenter1, 1.0,1.0,1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
     objects[0] = &plane1;
 
-    Coordinate centerSphere1(0.0, 150.0, 0.0, 1);
-    Sphere sphere1(500.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    Coordinate centerSphere1(0.0, 300.0, 400.0, 1);
+    Sphere sphere1(300.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
     objects[1] = &sphere1;
 
 //    Coordinate centerSphere2(-100, 1000, -100, 1);
@@ -65,6 +65,7 @@ int main(int argc, char *argv[]) {
 
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
+    int shadingFactor = 2;
     Coordinate lightDirection(-0.0,-0.0,1.0,0); // vector of general light aka sunlight
     lightDirection.normalise();
 
@@ -99,15 +100,17 @@ int main(int argc, char *argv[]) {
                 hits[i] = tempHit;
             }
 
-            Coordinate closest(INFINITY,INFINITY,INFINITY,0);
             int closestIndex = -1;
 
             for (int i=0;i<totalObjects;i++) { // find closest hit location
                 if (hits[i].isPoint()) { // check if there was a hit with this object
-                    if (closestIndex = -1)
+                    if (closestIndex == -1) {
                         closestIndex = i;
-                    if (hits[i].distance(eye) < hits[closestIndex].distance(eye))
-                        closestIndex = i;
+                    } else {
+                        if (hits[i].distance(eye) < hits[closestIndex].distance(eye)) {
+                            closestIndex = i;
+                        }
+                    }
                 }
             }
 
@@ -115,16 +118,16 @@ int main(int argc, char *argv[]) {
                 Coordinate shadowHit(0,0,0,0);
                 Ray shadowRay(hits[closestIndex], lightDirection);
                 int i=0;
-//                while (shadowHit.isPoint() == 0 and i < totalObjects) { // checking for shadow (is there an object between hit coordinate and light
-//                    if (not i==closestIndex) {
-//                        shadowHit = objects[i]->hit(shadowRay);
-//                    }
-//                    i++;
-//                }
+                while (shadowHit.isPoint() == 0 and i < totalObjects) { // checking for shadow (is there an object between hit coordinate and light
+                    if (not i==closestIndex) {
+                        shadowHit = objects[i]->hit(shadowRay);
+                    }
+                    i++;
+                }
 
                 vector<float> shading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
                 if (shadowHit.isPoint() == 1) {
-                    glColor3f(0,0,0);
+                    glColor3f(shading[0]*shading[3]/shadingFactor, shading[1]*shading[3]/shadingFactor, shading[2]*shading[3]/shadingFactor);
                 } else {
                     glColor3f(shading[0]*shading[3], shading[1]*shading[3], shading[2]*shading[3]);
                 }
