@@ -12,61 +12,35 @@ Coordinate Cube::hit(Ray ray) {
     Ray genRay = this->invRay(ray);
 
     // check top and bottom plane
-    if (genRay.getDirection().getZ() > 0.1) {
-        t[0] = (genRay.getOrigin().getZ() - 1.0) / -genRay.getDirection().getZ();
-        t[1] = (genRay.getOrigin().getZ() + 1.0) / -genRay.getDirection().getZ();
-        u[0] = (genRay.getOrigin().getX() + genRay.getDirection().getX() * t[0]);
+        t[0] = (-genRay.getOrigin().getZ() - 0.5) / genRay.getDirection().getZ(); // find t for hit with z = -0.5 plane
+        t[1] = (-genRay.getOrigin().getZ() + 0.5) / genRay.getDirection().getZ(); // find t for hit with z = +0.5 plane
+        u[0] = (genRay.getOrigin().getX() + genRay.getDirection().getX() * t[0]); // get x and y coordinate by filling in the found t
         v[0] = (genRay.getOrigin().getY() + genRay.getDirection().getY() * t[0]);
         u[1] = (genRay.getOrigin().getX() + genRay.getDirection().getX() * t[1]);
         v[1] = (genRay.getOrigin().getY() + genRay.getDirection().getY() * t[1]);
-    } else {
-        t[0] = INFINITY;
-        t[1] = INFINITY;
-        u[0] = 0;
-        v[0] = 0;
-        u[1] = 0;
-        v[1] = 0;
-    }
+
     // check left and right plane
-    if (genRay.getDirection().getX() > 0.1) {
-        t[2] = (genRay.getOrigin().getX() + 1.0) / -genRay.getDirection().getX();
-        t[3] = (genRay.getOrigin().getX() - 1.0) / -genRay.getDirection().getX();
+        t[2] = (-genRay.getOrigin().getX() - 0.5) / genRay.getDirection().getX(); // x = -0.5
+        t[3] = (-genRay.getOrigin().getX() + 0.5) / genRay.getDirection().getX(); // x = +0.5
         u[2] = (genRay.getOrigin().getZ() + genRay.getDirection().getZ() * t[2]);
         v[2] = (genRay.getOrigin().getY() + genRay.getDirection().getY() * t[2]);
         u[3] = (genRay.getOrigin().getZ() + genRay.getDirection().getZ() * t[3]);
         v[3] = (genRay.getOrigin().getY() + genRay.getDirection().getY() * t[3]);
-    } else {
-        t[2] = INFINITY;
-        t[3] = INFINITY;
-        u[2] = 0;
-        v[2] = 0;
-        u[3] = 0;
-        v[3] = 0;
-    }
 
     // check front and back plane
-    if (genRay.getDirection().getY() > 0.1) {
-        t[4] = (genRay.getOrigin().getY() + 1.0) / -genRay.getDirection().getY();
-        t[5] = (genRay.getOrigin().getY() - 1.0) / -genRay.getDirection().getY();
+        t[4] = (-genRay.getOrigin().getY() - 0.5) / genRay.getDirection().getY(); // y = -0.5
+        t[5] = (-genRay.getOrigin().getY() + 0.5) / genRay.getDirection().getY(); // y = +0.5
         u[4] = (genRay.getOrigin().getX() + genRay.getDirection().getX() * t[4]);
         v[4] = (genRay.getOrigin().getZ() + genRay.getDirection().getZ() * t[4]);
         u[5] = (genRay.getOrigin().getX() + genRay.getDirection().getX() * t[5]);
         v[5] = (genRay.getOrigin().getZ() + genRay.getDirection().getZ() * t[5]);
-    } else {
-        t[4] = INFINITY;
-        t[5] = INFINITY;
-        u[4] = 0;
-        v[4] = 0;
-        u[5] = 0;
-        v[5] = 0;
-    }
 
     // find closest hit
     float tempU = 0.0, tempV = 0.0, tempT = INFINITY;
     int index = -1;
 
     for (int i=0;i<6;i++) {
-        if ((t[i]<tempT) and (t[i]>0.0) and (abs(u[i])<=1.0) and (abs(v[i])<=1.0)) {
+        if ((t[i]<tempT) and (t[i]>0.0) and (abs(u[i])<=0.5) and (abs(v[i])<=0.5)) {
             tempT = t[i];
             tempU = u[i];
             tempV = v[i];
@@ -74,7 +48,7 @@ Coordinate Cube::hit(Ray ray) {
         }
     }
 
-    if (index!=-1) {
+    if (index != -1) {
         float tempX = genRay.getOrigin().getX() + genRay.getDirection().getX() * tempT;
         float tempY = genRay.getOrigin().getY() + genRay.getDirection().getY() * tempT;
         float tempZ = genRay.getOrigin().getZ() + genRay.getDirection().getZ() * tempT;
@@ -98,22 +72,22 @@ vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection
 
     Coordinate norm;
     if (tempX > 0.99) {
-        Coordinate normTemp(1.0,0.0,0.0,0);
+        Coordinate normTemp(0.5,0.0,0.0,0);
         norm = normTemp;
     } else if (tempX < -0.99) {
-        Coordinate normTemp(-1.0,0.0,0.0,0);
+        Coordinate normTemp(-0.5,0.0,0.0,0);
         norm = normTemp;
     } else if (tempY > 0.99) {
-        Coordinate normTemp(0.0,1.0,0.0,0);
+        Coordinate normTemp(0.0,0.5,0.0,0);
         norm = normTemp;
     } else if (tempY < -0.99) {
-        Coordinate normTemp(0.0,-1.0,0.0,0);
+        Coordinate normTemp(0.0,-0.5,0.0,0);
         norm = normTemp;
     } else if (tempZ > 0.99) {
-        Coordinate normTemp(0.0,0.0,1.0,0);
+        Coordinate normTemp(0.0,0.0,0.5,0);
         norm = normTemp;
     } else if (tempZ < -0.99) {
-        Coordinate normTemp(0.0,0.0,-1.0,0);
+        Coordinate normTemp(0.0,0.0,-0.5,0);
         norm = normTemp;
     }
 
