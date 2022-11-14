@@ -74,7 +74,7 @@ vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirecti
 
 
     if (angleLight > 1.5708) { // angle too big default=1.5708
-        shading[3] = 0.0;
+        shading[3] = 0.001;
     } else {
         shading[3] = 1.0 - (angleLight/1.5708);
     }

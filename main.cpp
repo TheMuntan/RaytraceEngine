@@ -24,48 +24,30 @@ using namespace std; // std vector for dynamic vector size
 
 
 int main(int argc, char *argv[]) {
-    int totalObjects = 5;
+    int totalObjects = 2;
     Object *objects[totalObjects];
 
     int screenX = 1280, screenY = 720;
 
     Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
-    Plane plane1(planeCenter1, 1.0,1.0,1.0, 1.0, 200.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    Plane plane1(planeCenter1, 1.0,1.0,1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
     objects[0] = &plane1;
 
-    Coordinate centerSphere1(500.0, 1500.0, 0.0, 1);
-    Sphere sphere1(500.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 0.0, 0.0, 2.0, 1.0, 1.0);
+    Coordinate centerSphere1(0.0, 150.0, 0.0, 1);
+    Sphere sphere1(500.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
     objects[1] = &sphere1;
 
-//    Coordinate originRay(-3, 0, 0, 1);
-//    Coordinate directionRay(-2, 0, 0, 1);
-//    Ray ray1(originRay, directionRay);
+//    Coordinate centerSphere2(-100, 1000, -100, 1);
+//    Sphere sphere2(200.0, centerSphere2, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+//    objects[2] = &sphere2;
 //
-//    Coordinate i1 = sphere.hit(ray1);
-
-    Coordinate centerSphere2(-100, 1000, -100, 1);
-    Sphere sphere2(200.0, centerSphere2, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    objects[2] = &sphere2;
-
-//    Coordinate originRay2(0, 3, 3, 1);
-//    Coordinate directionRay2(1, 3, 3, 1);
-//    Ray ray2(originRay2, directionRay2);
+//    Coordinate centerSphere3(  500.0, 2500.0, 500.0, 1);
+//    Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+//    objects[3] = &sphere3;
 //
-//    sphere2.hit(ray2);
-
-    Coordinate centerSphere3(  500.0, 2500.0, 500.0, 1);
-    Sphere sphere3(1000.0, centerSphere3, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    objects[3] = &sphere3;
-
-//    Coordinate originRay3(0, 3, 3, 1);
-//    Coordinate directionRay3(3, 4, 3, 1);
-//    Ray ray3(originRay3, directionRay3);
-//
-//    sphere3.hit(ray3);
-
-    Coordinate centerCube1(  -600.0, 600.0, 200.0, 1);
-    Cube cube1(centerCube1, 1.0, 0.0, 1.0, 1.0, 0.0, 45.0, 0.0, 150.0, 150.0, 150.0);
-    objects[4] = &cube1;
+//    Coordinate centerCube1(  -600.0, 600.0, 200.0, 1);
+//    Cube cube1(centerCube1, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 150.0, 150.0, 150.0);
+//    objects[4] = &cube1;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
@@ -81,15 +63,9 @@ int main(int argc, char *argv[]) {
     glClearColor(0.0,0.0,0.0,0.0);
     glMatrixMode(GL_PROJECTION);
 
-//    float theta = 30; //viewing angle
-//    float angle = tan((theta/2.0) * (M_PI / 180.0));
-//    float aspect = (float(screenX)/screenY); //aspect ratio
-//    float indWidth = 1/float(screenX);
-//    float indHeight = 1/float(screenY);
-
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
-    Coordinate lightDirection(-7.0,-5.0,-10.0,0); // vector of general light aka sunlight
+    Coordinate lightDirection(-0.0,-0.0,1.0,0); // vector of general light aka sunlight
     lightDirection.normalise();
 
     Coordinate eye(0.0, -1000.0, 200.0, 1);
@@ -136,10 +112,24 @@ int main(int argc, char *argv[]) {
             }
 
             if (closestIndex!=-1) {
+                Coordinate shadowHit(0,0,0,0);
+                Ray shadowRay(hits[closestIndex], lightDirection);
+                int i=0;
+//                while (shadowHit.isPoint() == 0 and i < totalObjects) { // checking for shadow (is there an object between hit coordinate and light
+//                    if (not i==closestIndex) {
+//                        shadowHit = objects[i]->hit(shadowRay);
+//                    }
+//                    i++;
+//                }
+
                 vector<float> shading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
-                glColor3f(shading[0]*shading[3], shading[1]*shading[3], shading[2]*shading[3]);
+                if (shadowHit.isPoint() == 1) {
+                    glColor3f(0,0,0);
+                } else {
+                    glColor3f(shading[0]*shading[3], shading[1]*shading[3], shading[2]*shading[3]);
+                }
             } else {
-                glColor3f(0, 0.7, 1.0);
+                glColor3f(0, 0.7, 1.0); // colour of the sky
             }
             glVertex2i(c / 2, -r / 2 + screenY);
         }

@@ -97,22 +97,22 @@ vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection
                    invMatrix[2][2] * hitLocation.getZ() + invMatrix[2][3] * hitLocation.isPoint());
 
     Coordinate norm;
-    if (tempX = 1) {
+    if (tempX > 0.99) {
         Coordinate normTemp(1.0,0.0,0.0,0);
         norm = normTemp;
-    } else if (tempX = -1) {
+    } else if (tempX < -0.99) {
         Coordinate normTemp(-1.0,0.0,0.0,0);
         norm = normTemp;
-    } else if (tempY = 1) {
+    } else if (tempY > 0.99) {
         Coordinate normTemp(0.0,1.0,0.0,0);
         norm = normTemp;
-    } else if (tempY = -1) {
+    } else if (tempY < -0.99) {
         Coordinate normTemp(0.0,-1.0,0.0,0);
         norm = normTemp;
-    } else if (tempZ = 1) {
+    } else if (tempZ > 0.99) {
         Coordinate normTemp(0.0,0.0,1.0,0);
         norm = normTemp;
-    } else if (tempZ = -1) {
+    } else if (tempZ < -0.99) {
         Coordinate normTemp(0.0,0.0,-1.0,0);
         norm = normTemp;
     }
@@ -131,10 +131,10 @@ vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection
     float angleLight = acos(normDirection.dot(lightDirection));
 
 
-    if (angleLight > 1.5708) { // angle too big default=1.5708
-        shading[3] = 0.0;
+    if (angleLight > 2) { // angle too big default=1.5708
+        shading[3] = 0.001;
     } else {
-        shading[3] = 1.0 - (angleLight/1.5708);
+        shading[3] = 1.0 - (angleLight/2);
     }
 
     return shading;
