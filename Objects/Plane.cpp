@@ -5,8 +5,8 @@
 #include "Plane.h"
 
 Plane::Plane(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ,
-             float scaleX, float scaleY, float scaleZ)
-        : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ) {}
+             float scaleX, float scaleY, float scaleZ, float reflection)
+        : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ, reflection) {}
 
 Coordinate Plane::hit(Ray ray) {
     Coordinate failedHit(0, 0, 0, 0);
@@ -27,7 +27,15 @@ Coordinate Plane::hit(Ray ray) {
     return failedHit;
 }
 
-vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirection) {
+Coordinate Plane::getNorm(Coordinate hitLocation) {
+    Coordinate invNorm(0.0,0.0,1.0,0);
+    invNorm.normalise();
+    Coordinate norm = transformCoordinate(invNorm);
+    norm.normalise();
+    return norm;
+}
+
+vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) {
     vector<float> shading = getRgba();
 
     float tempX = (invMatrix[0][0] * hitLocation.getX() + invMatrix[0][1] * hitLocation.getY() +

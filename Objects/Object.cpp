@@ -5,8 +5,8 @@
 #include "Object.h"
 
 Object::Object(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-               float scaleY, float scaleZ) : center(center), r(r), g(g), b(b), rotateX(rotateX), rotateY(rotateY),
-                                                                rotateZ(rotateZ), scaleX(scaleX), scaleY(scaleY), scaleZ(scaleZ) {
+               float scaleY, float scaleZ, float reflection) : center(center), r(r), g(g), b(b), rotateX(rotateX), rotateY(rotateY),
+                                                                rotateZ(rotateZ), scaleX(scaleX), scaleY(scaleY), scaleZ(scaleZ), reflection(reflection) {
     rgba.push_back(r);
     rgba.push_back(g);
     rgba.push_back(b);
@@ -214,5 +214,21 @@ const vector<float> &Object::getRgba() const {
 
 float Object::getA() const {
     return a;
+}
+
+float Object::getReflection() const {
+    return reflection;
+}
+
+Coordinate Object::reflect(Coordinate hitLocation, Coordinate lookVector) {
+    if (getReflection() > 0.0) {
+        Coordinate normDirection = getNorm(hitLocation);
+        Coordinate inVector(- lookVector.getX(), - lookVector.getY(), - lookVector.getZ() , 0);
+        Coordinate reflectedVector = normDirection * 2.0 * ( inVector.dot(normDirection) ) - inVector;
+        return reflectedVector;
+    }
+    Coordinate fail(0.0,0.0,0.0,1); // return a point if failure
+    return fail;
+
 }
 

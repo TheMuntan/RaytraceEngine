@@ -5,7 +5,7 @@
 #include "Cube.h"
 
 Cube::Cube(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-           float scaleY, float scaleZ) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ) {}
+           float scaleY, float scaleZ, float reflection) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ, reflection) {}
 
 Coordinate Cube::hit(Ray ray) {
     Coordinate failedHit(0, 0, 0, 0);
@@ -92,7 +92,7 @@ Coordinate Cube::getNorm(Coordinate hitLocation) {
     return normDirection;
 }
 
-vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection) {
+vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) {
     vector<float> shading = getRgba();
 
     Coordinate normDirection = getNorm(hitLocation);

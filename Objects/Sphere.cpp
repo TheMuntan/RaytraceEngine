@@ -10,7 +10,7 @@
 using namespace std;
 
 Sphere::Sphere(float radius, const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-               float scaleY, float scaleZ) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius), radius(radius) {}
+               float scaleY, float scaleZ, float reflection) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius, reflection), radius(radius) {}
 
 Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     Coordinate failedHit(0, 0, 0, 0);
@@ -72,10 +72,11 @@ Coordinate Sphere::getNorm(Coordinate hitLocation) {
     return norm;
 }
 
-vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirection) {
+vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) {
     vector<float> shading = getRgba();
 
-    Coordinate normDirection = getNorm(hitLocation);;
+    Coordinate normDirection = getNorm(hitLocation);
+//    Coordinate normDirection = hitLocation - getCenter();
 
     float angleLight = acos(normDirection.dot(lightDirection));
 
@@ -85,6 +86,7 @@ vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirecti
     } else {
         shading[3] = 1.0 - (angleLight/1.5708);
     }
+
 
     return shading;
 }

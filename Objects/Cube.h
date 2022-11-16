@@ -16,13 +16,13 @@ class Cube : public Object {
 
 public:
     Cube(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-         float scaleY, float scaleZ);
+         float scaleY, float scaleZ, float reflection);
 
     Coordinate hit(Ray ray) override;
 
-    vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) override;
+    vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) override;
 
-    Coordinate getNorm(Coordinate hitLocation);
+    Coordinate getNorm(Coordinate hitLocation) override;
 };
 
 

@@ -18,13 +18,14 @@ class Object {
     float r,g,b,a;
     float rotateX, rotateY, rotateZ;
     float scaleX, scaleY, scaleZ;
+    float reflection;
     vector<float> rgba;
 public:
     float matrix[4][4];
     float invMatrix[4][4];
 
     Object(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-           float scaleY, float scaleZ);
+           float scaleY, float scaleZ, float reflection);
 
     float getA() const;
 
@@ -44,13 +45,19 @@ public:
 
     void setRotateZ(float rotateZ);
 
+    float getReflection() const;
 //    Ray invRay(Ray ray);
 
 //    Coordinate calcRealCoords(float tempX, float tempY, float tempZ, float tempP);
 
     virtual Coordinate hit(Ray ray);
 
-    virtual vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) =0;
+    virtual vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) =0;
+
+    virtual Coordinate getNorm(Coordinate hitLocation) =0;
+
+
+    Coordinate reflect(Coordinate hitLocation, Coordinate lookVector);
 
     Coordinate invCoordinate(Coordinate coord);
 
