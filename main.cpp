@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     objects[0] = &plane1;
 
     Coordinate centerSphere1(200.0, 300.0, 1200.0, 1);
-    Sphere sphere1(300.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 1.0);
+    Sphere sphere1(300.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 0.0);
     objects[1] = &sphere1;
 
     Coordinate centerSphere2(300, 350, 160, 1);
@@ -71,9 +71,8 @@ int main(int argc, char *argv[]) {
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
     int shadingFactor = 4;
-//    Coordinate lightDirection(-0.0,-0.0,1.0,0); // vector of general light aka sunlight
-//    lightDirection.normalise();
     Coordinate lightPosition(0.0,300.0,3000.0,1); // point light coordinate
+//    Coordinate lightPosition(-200.0,0.0,1200.0,1); // point light coordinate
 
     Coordinate eye(0.0, -2000.0, 2000.0, 1);
     Coordinate lookPoint(0.0, 200.0, 200.0, 1);
@@ -135,6 +134,9 @@ int main(int argc, char *argv[]) {
                         if (i != closestIndex){
                             Coordinate tempHit = objects[i]->hit(reflectRay);
                             reflectionHit[i] = tempHit;
+                        } else {
+                            Coordinate fakeHit(0.0,0.0,0.0,0);
+                            reflectionHit[i] = fakeHit;
                         }
                     }
                     int reflectionIndex = -1;
@@ -150,7 +152,7 @@ int main(int argc, char *argv[]) {
                             }
                         }
                     }
-                    if (reflectionIndex!=-1) {
+                    if (reflectionIndex != -1) {
                         lightDirection = lightPosition - reflectionHit[reflectionIndex]; // calculate vector direction of light
                         lightDirection.normalise();
 
@@ -165,13 +167,31 @@ int main(int argc, char *argv[]) {
                 Coordinate shadowHit(0,0,0,0);
                 Ray shadowRay(hits[closestIndex], lightDirection);
                 int i=0;
-                while (shadowHit.isPoint() == 0 and i < totalObjects) { // checking for shadow (is there an object between hit coordinate and light
+                Coordinate shadowObject[totalObjects];
+                for (int i=0;i<totalObjects;i++) { // checking for shadow (is there an object between hit coordinate and light
                     if (i != closestIndex) {
                         shadowHit = objects[i]->hit(shadowRay);
+                        shadowObject[i] = shadowHit;
+                    } else {
+                        Coordinate failHit(0.0,0.0,0.0,0);
+                        shadowObject[i] = failHit;
                     }
-                    i++;
                 }
-                if (shadowHit.isPoint() == 1) {
+                int shadowIndex = -1;
+
+                for (int i=0;i<totalObjects;i++) { // find closest hit location
+                    if (shadowObject[i].isPoint()) { // check if there was a hit with this object
+                        if (shadowIndex == -1) {
+                            shadowIndex = i;
+                        } else {
+                            if (shadowObject[i].distance(hits[closestIndex]) < shadowObject[shadowIndex].distance(hits[closestIndex])) {
+                                shadowIndex = i;
+                            }
+                        }
+                    }
+                }
+
+                if (shadowIndex != -1 and (shadowObject[i].distance(hits[closestIndex]) < lightPosition.distance(hits[closestIndex])) ) {
                     glColor3f(shading[0]*shading[3]/shadingFactor, shading[1]*shading[3]/shadingFactor, shading[2]*shading[3]/shadingFactor);
                 } else {
                     glColor3f(shading[0]*shading[3], shading[1]*shading[3], shading[2]*shading[3]);
