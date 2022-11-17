@@ -15,6 +15,8 @@ class Ray {
 public:
     Ray(const Coordinate origin, const Coordinate direction);
 
+    Ray();
+
     const Coordinate getOrigin() const;
     const Coordinate getDirection() const;
 

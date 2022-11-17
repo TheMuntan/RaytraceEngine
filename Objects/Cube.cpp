@@ -66,22 +66,22 @@ Coordinate Cube::getNorm(Coordinate hitLocation) {
     Coordinate invLocation = invCoordinate(hitLocation);
 
     Coordinate norm;
-    if (invLocation.getX() > 0.49) {
+    if (invLocation.getX() > 0.4999) {
         Coordinate normTemp(0.5,0.0,0.0,0);
         norm = normTemp;
-    } else if (invLocation.getX() < -0.49) {
+    } else if (invLocation.getX() < -0.4999) {
         Coordinate normTemp(-0.5,0.0,0.0,0);
         norm = normTemp;
-    } else if (invLocation.getY() > 0.49) {
+    } else if (invLocation.getY() > 0.4999) {
         Coordinate normTemp(0.0,0.5,0.0,0);
         norm = normTemp;
-    } else if (invLocation.getY() < -0.49) {
+    } else if (invLocation.getY() < -0.4999) {
         Coordinate normTemp(0.0,-0.5,0.0,0);
         norm = normTemp;
-    } else if (invLocation.getZ() > 0.49) {
+    } else if (invLocation.getZ() > 0.4999) {
         Coordinate normTemp(0.0,0.0,0.5,0);
         norm = normTemp;
-    } else if (invLocation.getZ() < -0.49) {
+    } else if (invLocation.getZ() < -0.4999) {
         Coordinate normTemp(0.0,0.0,-0.5,0);
         norm = normTemp;
     }

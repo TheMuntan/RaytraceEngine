@@ -23,3 +23,7 @@ void Ray::setOrigin(Coordinate origin) {
 void Ray::setDirection(Coordinate direction) {
     Ray::direction = direction;
 }
+
+Ray::Ray() {
+
+}

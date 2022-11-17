@@ -24,38 +24,47 @@ using namespace std; // std vector for dynamic vector size
 
 
 int main(int argc, char *argv[]) {
-    int totalObjects = 6;
-    Object *objects[totalObjects];
+    int totalObjects = 0;
 
+//    int screenX = 1920, screenY = 1080;
     int screenX = 1280, screenY = 720;
 //    int screenX = 720, screenY = 480;
 
     Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
     Plane plane1(planeCenter1, 88/255.0, 0/255.0, 133/255.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
-    objects[0] = &plane1;
+    totalObjects++;
 
-    Coordinate centerSphere1(200.0, 300.0, 1000.0, 1);
-    Sphere sphere1(300.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 1.0);
-    objects[1] = &sphere1;
+    Coordinate centerSphere1(200.0, 500.0, 1000.0, 1);
+    Sphere sphere1(600.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 0.5);
+    totalObjects++;
 
     Coordinate centerSphere2(300, 350, 160, 1);
     Sphere sphere2(150.0, centerSphere2, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
-    objects[2] = &sphere2;
+    totalObjects++;
 
-    Coordinate centerSphere3(  1500.0, 2500.0, 1300.0, 1);
+    Coordinate centerSphere3(  2200.0, 1500.0, 1300.0, 1);
     Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
-    objects[3] = &sphere3;
+    totalObjects++;
 
-    Coordinate centerCube1(  -600.0, 600.0, 300.0, 1);
-    Cube cube1(centerCube1, 66/255.0, 135/255.0, 245/255.0, 1.0, 0.0, 0.0, 0.0, 150.0, 150.0, 150.0, 0.0);
-    objects[4] = &cube1;
+    Coordinate centerCube1(  -800.0, 200.0, 600.0, 1);
+    Cube cube1(centerCube1, 66/255.0, 135/255.0, 245/255.0, 1.0, 0.0, 0.0, 0.0, 300.0, 300.0, 300.0, 0.0);
+    totalObjects++;
 
-    Coordinate centerCube2(  -1600.0, 400.0, 700.0, 1);
-    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 20.0, -180.0, 0.0, 500.0, 500.0, 500.0, 0.0);
-    objects[5] = &cube2;
+    Coordinate centerCube2(  -1600.0, 0.0, 700.0, 1);
+    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 20.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0);
+    totalObjects++;
 
 //    Coordinate planeCenter2(0.0, 0.0, 5000.0, 1);
 //    Plane plane2(planeCenter2, 1.0,1.0,1.0, 1.0, 00.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
+//    totalObjects++;
+
+    Object *objects[totalObjects];
+    objects[0] = &plane1;
+    objects[1] = &sphere1;
+    objects[2] = &sphere2;
+    objects[3] = &sphere3;
+    objects[4] = &cube1;
+    objects[5] = &cube2;
 //    objects[6] = &plane2;
 
     glutInit(&argc, argv);
@@ -133,10 +142,12 @@ int main(int argc, char *argv[]) {
 
                 Coordinate lightDirection = lightPosition - hits[closestIndex]; // calculate vector direction of light
                 lightDirection.normalise();
+                Ray shadowRay;
 
                 // Check reflection on object
-                Coordinate reflection = objects[closestIndex]->reflect(hits[closestIndex], lookVector);
-                if (! reflection.isPoint()) {
+                float reflectionAmount = objects[closestIndex]->getReflection();
+                if (reflectionAmount > 0.0) {
+                    Coordinate reflection = objects[closestIndex]->reflect(hits[closestIndex], lookVector);
                     Ray reflectRay(hits[closestIndex], reflection);
                     Coordinate reflectionHit[totalObjects];
                     for (int i=0;i<totalObjects;i++) { // check hits with all existing objects for a screen ray and save coordinate
@@ -161,18 +172,38 @@ int main(int argc, char *argv[]) {
                             }
                         }
                     }
-                    if (reflectionIndex != -1) {
+                    if (reflectionIndex != -1) { // reflection of other object
+//                        vector<float> reflectShading;
+//                        vector<float> tempShading;
+//                        vector<float> objShading = objects[closestIndex]->getShading(reflectionHit[closestIndex], lightDirection);
+
                         lightDirection = lightPosition - reflectionHit[reflectionIndex]; // calculate vector direction of light
                         lightDirection.normalise();
 
                         shading = objects[reflectionIndex]->getShading(reflectionHit[reflectionIndex], lightDirection);
+//                        for (int i;i<4;i++) {
+//                            tempShading.push_back(reflectShading[i]*reflectionAmount+objShading[i]*(1.0-reflectionAmount));
+//                        }
+//
+//                        shading = tempShading;
+
+
+                        // check for shadow
+                        Ray reflect(reflectionHit[reflectionIndex], lightDirection);
+                        shadowRay = reflect;
+                    } else { // reflection of sky
+                        Ray reflect(hits[closestIndex], lightDirection);
+                        shadowRay = reflect;
+
                     }
                 } else {
+                    Ray noReflect(hits[closestIndex], lightDirection);
+                    shadowRay = noReflect;
+
                     shading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
                 }
 
                 Coordinate shadowHit(0,0,0,0);
-                Ray shadowRay(hits[closestIndex], lightDirection);
                 int i=0;
                 Coordinate shadowObject[totalObjects];
                 for (int i=0;i<totalObjects;i++) { // checking for shadow (is there an object between hit coordinate and light
