@@ -54,6 +54,10 @@ int main(int argc, char *argv[]) {
     Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 20.0, 0.0, 0.0, 500.0, 500.0, 500.0, 0.0);
     objects[5] = &cube2;
 
+//    Coordinate planeCenter2(0.0, 2000.0, 0.0, 1);
+//    Plane plane2(planeCenter2, 1.0,1.0,1.0, 1.0, 70.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0);
+//    objects[6] = &plane2;
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 
@@ -71,8 +75,8 @@ int main(int argc, char *argv[]) {
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
     int shadingFactor = 4;
-    Coordinate lightPosition(0.0,300.0,3000.0,1); // point light coordinate
-//    Coordinate lightPosition(-200.0,0.0,1200.0,1); // point light coordinate
+//    Coordinate lightPosition(0.0,300.0,3000.0,1); // point light coordinate
+    Coordinate lightPosition(0.0,0.0,1200.0,1); // point light coordinate
 
     Coordinate eye(0.0, -2000.0, 2000.0, 1);
     Coordinate lookPoint(0.0, 200.0, 200.0, 1);
@@ -191,7 +195,7 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                if (shadowIndex != -1 and (shadowObject[i].distance(hits[closestIndex]) < lightPosition.distance(hits[closestIndex])) ) {
+                if (shadowIndex != -1 and (abs(shadowObject[i].distance(hits[closestIndex])) < abs(lightPosition.distance(hits[closestIndex]))) ) {
                     glColor3f(shading[0]*shading[3]/shadingFactor, shading[1]*shading[3]/shadingFactor, shading[2]*shading[3]/shadingFactor);
                 } else {
                     glColor3f(shading[0]*shading[3], shading[1]*shading[3], shading[2]*shading[3]);
