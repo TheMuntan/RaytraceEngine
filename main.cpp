@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 //    int screenX = 720, screenY = 480;
 
     Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
-    Plane plane1(planeCenter1, 1.0,1.0,1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
+    Plane plane1(planeCenter1, 88/255.0, 0/255.0, 133/255.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
     objects[0] = &plane1;
 
     Coordinate centerSphere1(200.0, 300.0, 1000.0, 1);
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     objects[4] = &cube1;
 
     Coordinate centerCube2(  -1600.0, 400.0, 700.0, 1);
-    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 20.0, 0.0, 0.0, 500.0, 500.0, 500.0, 0.0);
+    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 20.0, -180.0, 0.0, 500.0, 500.0, 500.0, 0.0);
     objects[5] = &cube2;
 
 //    Coordinate planeCenter2(0.0, 0.0, 5000.0, 1);

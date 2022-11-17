@@ -37,6 +37,7 @@ Coordinate Plane::getNorm(Coordinate hitLocation) {
 
 vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
+    vector<float> shadingDefault = getRgba();
 
     float tempX = (invMatrix[0][0] * hitLocation.getX() + invMatrix[0][1] * hitLocation.getY() +
                    invMatrix[0][2] * hitLocation.getZ() + invMatrix[0][3] * hitLocation.isPoint());
@@ -48,7 +49,7 @@ vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirectio
         shading = {1.0, 1.0, 1.0, 1.0};
 
     } else if (sin(tempX/squareSize) > 0.0 and sin(tempY/squareSize) < 0.0 or (sin(tempX/squareSize) < 0.0 and sin(tempY/squareSize) > 0.0)) {
-        shading = {189/255.0, 58/255.0, 167/255.0, 1.0};
+        shading = shadingDefault;
     }
 
     Coordinate norm(0.0, 0.0, 1.0, 0);
