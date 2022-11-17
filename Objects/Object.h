@@ -52,7 +52,7 @@ public:
 
     virtual Coordinate hit(Ray ray);
 
-    virtual vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) =0;
+    virtual vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) =0;
 
     virtual Coordinate getNorm(Coordinate hitLocation) =0;
 

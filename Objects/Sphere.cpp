@@ -72,7 +72,7 @@ Coordinate Sphere::getNorm(Coordinate hitLocation) {
     return norm;
 }
 
-vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) {
+vector<float> Sphere::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
 
     Coordinate normDirection = getNorm(hitLocation);

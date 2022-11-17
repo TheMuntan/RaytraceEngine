@@ -225,8 +225,8 @@ Coordinate Object::reflect(Coordinate hitLocation, Coordinate lookVector) {
         Coordinate normDirection = getNorm(hitLocation);
         Coordinate inVector(- lookVector.getX(), - lookVector.getY(), - lookVector.getZ() , 0);
         Coordinate reflectedVector = normDirection * 2.0 * ( inVector.dot(normDirection) ) - inVector;
-//        Coordinate reflectedVector2(1.0,1.0,-1.0,0);
         reflectedVector.normalise();
+
         return reflectedVector;
     }
     Coordinate fail(0.0,0.0,0.0,1); // return a point if no reflection

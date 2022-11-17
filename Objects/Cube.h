@@ -20,7 +20,7 @@ public:
 
     Coordinate hit(Ray ray) override;
 
-    vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) override;
+    vector<float> getShading(Coordinate hitLocation, Coordinate lightDirection) override;
 
     Coordinate getNorm(Coordinate hitLocation) override;
 };

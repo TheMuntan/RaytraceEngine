@@ -35,7 +35,7 @@ Coordinate Plane::getNorm(Coordinate hitLocation) {
     return norm;
 }
 
-vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) {
+vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
 
     float tempX = (invMatrix[0][0] * hitLocation.getX() + invMatrix[0][1] * hitLocation.getY() +

@@ -92,7 +92,7 @@ Coordinate Cube::getNorm(Coordinate hitLocation) {
     return normDirection;
 }
 
-vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection, Coordinate lookVector) {
+vector<float> Cube::getShading(Coordinate hitLocation, Coordinate lightDirection) {
     vector<float> shading = getRgba();
 
     Coordinate normDirection = getNorm(hitLocation);
