@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     totalObjects++;
 
     Coordinate centerCube2(  -1600.0, 0.0, 700.0, 1);
-    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 20.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0);
+    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 0.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0);
     totalObjects++;
 
 //    Coordinate planeCenter2(0.0, 0.0, 5000.0, 1);
@@ -173,25 +173,30 @@ int main(int argc, char *argv[]) {
                         }
                     }
                     if (reflectionIndex != -1) { // reflection of other object
-//                        vector<float> reflectShading;
-//                        vector<float> tempShading;
-//                        vector<float> objShading = objects[closestIndex]->getShading(reflectionHit[closestIndex], lightDirection);
+                        vector<float> reflectShading;
+                        vector<float> objShading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
 
                         lightDirection = lightPosition - reflectionHit[reflectionIndex]; // calculate vector direction of light
                         lightDirection.normalise();
 
-                        shading = objects[reflectionIndex]->getShading(reflectionHit[reflectionIndex], lightDirection);
-//                        for (int i;i<4;i++) {
-//                            tempShading.push_back(reflectShading[i]*reflectionAmount+objShading[i]*(1.0-reflectionAmount));
-//                        }
-//
-//                        shading = tempShading;
-
+                        vector<float> tempShading = objects[reflectionIndex]->getShading(reflectionHit[reflectionIndex], lightDirection);
+                        for (int i=0;i<4;i++) {
+                            reflectShading.push_back(tempShading[i]*reflectionAmount+objShading[i]*(1.0-reflectionAmount));
+                        }
+                        shading = reflectShading;
 
                         // check for shadow
                         Ray reflect(reflectionHit[reflectionIndex], lightDirection);
                         shadowRay = reflect;
                     } else { // reflection of sky
+                        vector<float> reflectShading;
+                        vector<float> objShading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
+
+                        for (int i=0;i<4;i++) {
+                            reflectShading.push_back(shading[i]*reflectionAmount+objShading[i]*(1.0-reflectionAmount));
+                        }
+                        shading = reflectShading;
+
                         Ray reflect(hits[closestIndex], lightDirection);
                         shadowRay = reflect;
 
