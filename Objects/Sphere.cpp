@@ -10,7 +10,8 @@
 using namespace std;
 
 Sphere::Sphere(float radius, const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-               float scaleY, float scaleZ, float reflection) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius, reflection), radius(radius) {}
+               float scaleY, float scaleZ, float reflection, float transparency, float refraction) :
+               Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius, reflection, transparency, refraction), radius(radius) {}
 
 Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     Coordinate failedHit(0, 0, 0, 0);
@@ -26,7 +27,6 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     float discrim = B * B - 4 * A * C;
 
     if (discrim < 0) {
-        //cout << endl << "No hit." << endl;
         return failedHit; //returns a coordinate with 0 as the last value when no hit is found
     }
 
@@ -34,9 +34,7 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     float t2 = (-B + sqrt(discrim)) / (2 * A);
 
     if (t1 < 0.0 or t2 < 0.0) {
-        //cout << endl << "No hit." << endl;
         return failedHit; //returns a coordinate with 0 as the last value when no hit is found
-
     }
 
     if (t1 < t2) {
@@ -69,6 +67,11 @@ Coordinate Sphere::getNorm(Coordinate hitLocation) {
     invNorm.normalise();
     Coordinate norm = transformCoordinate(invNorm);
     norm.normalise();
+//    float randoms = static_cast <float> (rand())/static_cast <float> (RAND_MAX);
+//    float randoms2 = static_cast <float> (rand())/static_cast <float> (RAND_MAX);
+//    float randoms3 = static_cast <float> (rand())/static_cast <float> (RAND_MAX);
+//    Coordinate rough(norm.getX() + randoms/100.0-0.005, norm.getY()+ randoms2/100.0-0.005, norm.getZ()+ randoms3/100.0-0.005, 0);
+//    rough.normalise();
     return norm;
 }
 

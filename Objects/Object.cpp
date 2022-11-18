@@ -5,8 +5,9 @@
 #include "Object.h"
 
 Object::Object(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-               float scaleY, float scaleZ, float reflection) : center(center), r(r), g(g), b(b), rotateX(rotateX), rotateY(rotateY),
-                                                                rotateZ(rotateZ), scaleX(scaleX), scaleY(scaleY), scaleZ(scaleZ), reflection(reflection) {
+               float scaleY, float scaleZ, float reflection, float transparency, float refraction) : center(center), r(r), g(g), b(b), rotateX(rotateX), rotateY(rotateY),
+                                                                rotateZ(rotateZ), scaleX(scaleX), scaleY(scaleY), scaleZ(scaleZ), reflection(reflection) , transparency(transparency),
+                                                                refraction(refraction) {
     rgba.push_back(r);
     rgba.push_back(g);
     rgba.push_back(b);
@@ -220,10 +221,10 @@ float Object::getReflection() const {
     return reflection;
 }
 
-Coordinate Object::reflect(Coordinate hitLocation, Coordinate lookVector) {
+Coordinate Object::reflect(Coordinate hitLocation, Coordinate worldVector) {
     if (getReflection() > 0.0) {
         Coordinate normDirection = getNorm(hitLocation);
-        Coordinate inVector(- lookVector.getX(), - lookVector.getY(), - lookVector.getZ() , 0);
+        Coordinate inVector(- worldVector.getX(), - worldVector.getY(), - worldVector.getZ() , 0);
         Coordinate reflectedVector = normDirection * 2.0 * ( inVector.dot(normDirection) ) - inVector;
         reflectedVector.normalise();
 
@@ -232,5 +233,28 @@ Coordinate Object::reflect(Coordinate hitLocation, Coordinate lookVector) {
     Coordinate fail(0.0,0.0,0.0,1); // return a point if no reflection
     return fail;
 
+}
+
+float Object::getTransparency() const {
+    return transparency;
+}
+
+Coordinate Object::refract(Coordinate hitLocation, Coordinate worldVector) {
+    float refractionAmount = getRefraction();
+//    if (refractionAmount > 0.0) { // TODO: calculate refracted vector
+        Coordinate normDirection = getNorm(hitLocation);
+        Coordinate invNorm(- normDirection.getX(), - normDirection.getY(), - normDirection.getZ(), 0);
+        Coordinate betweenVector = worldVector - invNorm;
+        Coordinate refractedVector(worldVector.getX() + betweenVector.getX()*refractionAmount, worldVector.getY() + betweenVector.getY()*refractionAmount,
+                                   worldVector.getZ() + betweenVector.getZ()*refractionAmount, 0);
+        refractedVector.normalise();
+
+        return refractedVector;
+//    }
+//    return worldVector; // if no refraction, return the own vector to continue looking straight ahead, basically just transparency
+}
+
+float Object::getRefraction() const {
+    return refraction;
 }
 

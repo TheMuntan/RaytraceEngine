@@ -31,31 +31,37 @@ int main(int argc, char *argv[]) {
 //    int screenX = 720, screenY = 480;
 
     Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
-    Plane plane1(planeCenter1, 88/255.0, 0/255.0, 133/255.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
+    Plane plane1(planeCenter1, 88/255.0, 0/255.0, 133/255.0, 1.0,
+                 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate centerSphere1(200.0, 500.0, 1000.0, 1);
-    Sphere sphere1(600.0, centerSphere1, 1.0,0.1,0.0, 1.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 0.5);
+    Coordinate centerSphere1(1200.0, 500.0, 1000.0, 1);
+    Sphere sphere1(600.0, centerSphere1, 1.0,0.1,0.0, 1.0,
+                   0.0, 180.0, 0.0, 2.0, 1.0, 1.0, 0.6, 0.0, 0.0);
     totalObjects++;
 
     Coordinate centerSphere2(300, 350, 160, 1);
-    Sphere sphere2(150.0, centerSphere2, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
+    Sphere sphere2(150.0, centerSphere2, 0.0, 1.0, 0.0, 1.0,
+                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate centerSphere3(  2200.0, 1500.0, 1300.0, 1);
-    Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
+    Coordinate centerSphere3(  -1200.0, 1500.0, 1300.0, 1);
+    Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0,
+                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.7, 0.0);
     totalObjects++;
 
     Coordinate centerCube1(  -800.0, 200.0, 600.0, 1);
-    Cube cube1(centerCube1, 66/255.0, 135/255.0, 245/255.0, 1.0, 0.0, 0.0, 0.0, 300.0, 300.0, 300.0, 0.0);
+    Cube cube1(centerCube1, 66/255.0, 135/255.0, 245/255.0, 1.0,
+               0.0, 0.0, 0.0, 300.0, 300.0, 300.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
     Coordinate centerCube2(  -1600.0, 0.0, 700.0, 1);
-    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0, 0.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0);
+    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0,
+               60.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
 //    Coordinate planeCenter2(0.0, 0.0, 5000.0, 1);
-//    Plane plane2(planeCenter2, 1.0,1.0,1.0, 1.0, 00.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0);
+//    Plane plane2(planeCenter2, 1.0,1.0,1.0, 1.0, 00.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
 //    totalObjects++;
 
     Object *objects[totalObjects];
@@ -108,8 +114,11 @@ int main(int argc, char *argv[]) {
 
             Coordinate screenWorld1 = screenCenter + (u * (c/float(screenX) - 1));
             Coordinate screenWorldCoordinate = screenWorld1 + (v * (r/float(screenY) - 1));
+            Coordinate worldVector = screenWorldCoordinate - eye;
 
-            Ray screenRay(eye,screenWorldCoordinate);
+            worldVector.normalise();
+
+            Ray screenRay(eye,worldVector);
 
             Coordinate hits[totalObjects];
 
@@ -133,10 +142,15 @@ int main(int argc, char *argv[]) {
             }
 
             vector<float> shading;
-            shading.push_back(65/255.0);
-            shading.push_back(127/255.0);
-            shading.push_back(224/255.0);
-            shading.push_back(1.0);
+            shading.push_back(0/255.0);
+            shading.push_back(0/255.0);
+            shading.push_back(0/255.0);
+            shading.push_back(0.0);
+            vector<float> skyShading;
+            skyShading.push_back(65/255.0);
+            skyShading.push_back(127/255.0);
+            skyShading.push_back(224/255.0);
+            skyShading.push_back(1.0);
 
             if (closestIndex != -1) {
 
@@ -147,7 +161,7 @@ int main(int argc, char *argv[]) {
                 // Check reflection on object
                 float reflectionAmount = objects[closestIndex]->getReflection();
                 if (reflectionAmount > 0.0) {
-                    Coordinate reflection = objects[closestIndex]->reflect(hits[closestIndex], lookVector);
+                    Coordinate reflection = objects[closestIndex]->reflect(hits[closestIndex], worldVector);
                     Ray reflectRay(hits[closestIndex], reflection);
                     Coordinate reflectionHit[totalObjects];
                     for (int i=0;i<totalObjects;i++) { // check hits with all existing objects for a screen ray and save coordinate
@@ -162,7 +176,7 @@ int main(int argc, char *argv[]) {
                     int reflectionIndex = -1;
 
                     for (int i=0;i<totalObjects;i++) { // find closest reflection location
-                        if (reflectionHit[i].isPoint() and i != closestIndex) { // check if there was a hit with this object
+                        if (reflectionHit[i].isPoint()) { // check if there was a hit with this object
                             if (reflectionIndex == -1) {
                                 reflectionIndex = i;
                             } else {
@@ -193,7 +207,7 @@ int main(int argc, char *argv[]) {
                         vector<float> objShading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
 
                         for (int i=0;i<4;i++) {
-                            reflectShading.push_back(shading[i]*reflectionAmount+objShading[i]*(1.0-reflectionAmount));
+                            reflectShading.push_back(skyShading[i]*reflectionAmount+objShading[i]*(1.0-reflectionAmount));
                         }
                         shading = reflectShading;
 
@@ -206,6 +220,65 @@ int main(int argc, char *argv[]) {
                     shadowRay = noReflect;
 
                     shading = objects[closestIndex]->getShading(hits[closestIndex], lightDirection);
+                }
+
+                //refraction and transparency
+                float transparencyAmount = objects[closestIndex]->getTransparency();
+                if (transparencyAmount > 0.0) {
+                    Coordinate refraction = objects[closestIndex]->refract(hits[closestIndex], worldVector);
+                    Ray refractRay(hits[closestIndex], refraction);
+                    Coordinate refractionHit[totalObjects];
+                    for (int i=0;i<totalObjects;i++) { // check hits with all existing objects for a screen ray and save coordinate
+                        if (i != closestIndex){ // TODO: later this will be removed as it can hit itself and be re-refracted
+                            Coordinate tempHit = objects[i]->hit(refractRay);
+                            refractionHit[i] = tempHit;
+                        } else {
+                            Coordinate fakeHit(0.0,0.0,0.0,0);
+                            refractionHit[i] = fakeHit;
+                        }
+                    }
+                    int refractionIndex = -1;
+
+                    for (int i=0;i<totalObjects;i++) { // find closest refraction location
+                        if (refractionHit[i].isPoint()) { // check if there was a hit with this object TODO: remove closestIndex
+                            if (refractionIndex == -1) {
+                                refractionIndex = i;
+                            } else {
+                                if (refractionHit[i].distance(hits[closestIndex]) < refractionHit[refractionIndex].distance(hits[closestIndex])) {
+                                    refractionIndex = i;
+                                }
+                            }
+                        }
+                    }
+                    if (refractionIndex != -1) { // refraction hits other object
+                        vector<float> refractShading;
+
+                        lightDirection = lightPosition - refractionHit[refractionIndex]; // calculate vector direction of light
+                        lightDirection.normalise();
+
+                        vector<float> tempShading = objects[refractionIndex]->getShading(refractionHit[refractionIndex], lightDirection);
+                        for (int i=0;i<4;i++) {
+                            refractShading.push_back(tempShading[i]*transparencyAmount+shading[i]*(1.0-transparencyAmount));
+                        }
+                        shading = refractShading;
+
+                        //check for shadow in the refracted spot
+                        Ray refract(hits[closestIndex], lightDirection);
+                        shadowRay = refract;
+
+
+                    } else { // refraction of sky
+                        vector<float> refractShading;
+
+                        for (int i=0;i<4;i++) {
+                            refractShading.push_back(skyShading[i]*transparencyAmount+shading[i]*(1.0-transparencyAmount));
+                        }
+                        shading = refractShading;
+
+                        Ray refract(hits[closestIndex], lightDirection);
+                        shadowRay = refract;
+
+                    }
                 }
 
                 Coordinate shadowHit(0,0,0,0);
@@ -239,6 +312,8 @@ int main(int argc, char *argv[]) {
                 } else {
                     shadingFactor = 1;
                 }
+            } else {
+                shading = skyShading;
             }
 
             glColor3f(shading[0]*shading[3]/shadingFactor, shading[1]*shading[3]/shadingFactor, shading[2]*shading[3]/shadingFactor);

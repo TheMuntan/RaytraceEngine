@@ -15,7 +15,7 @@ class Sphere : public Object {
     float radius;
 public:
     Sphere(float radius, const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-           float scaleY, float scaleZ, float reflection);
+           float scaleY, float scaleZ, float reflection, float transparency, float refraction);
 
 
     Coordinate hit(Ray ray) override;

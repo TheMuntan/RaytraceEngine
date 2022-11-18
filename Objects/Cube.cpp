@@ -5,7 +5,9 @@
 #include "Cube.h"
 
 Cube::Cube(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-           float scaleY, float scaleZ, float reflection) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ, reflection) {}
+           float scaleY, float scaleZ, float reflection, float transparency, float refraction) : Object(center, r, g, b, a, rotateX,
+                                                                                                        rotateY, rotateZ, scaleX, scaleY, scaleZ,
+                                                                                                        reflection, transparency, refraction) {}
 
 Coordinate Cube::hit(Ray ray) {
     Coordinate failedHit(0, 0, 0, 0);
