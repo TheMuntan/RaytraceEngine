@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 
     Coordinate centerSphere3(  -1200.0, 1500.0, 1300.0, 1);
     Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0,
-                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.7, 0.0);
+                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.7, 1.3);
     totalObjects++;
 
     Coordinate centerCube1(  -800.0, 200.0, 600.0, 1);
@@ -240,7 +240,7 @@ int main(int argc, char *argv[]) {
                     int refractionIndex = -1;
 
                     for (int i=0;i<totalObjects;i++) { // find closest refraction location
-                        if (refractionHit[i].isPoint()) { // check if there was a hit with this object TODO: remove closestIndex
+                        if (refractionHit[i].isPoint()) { // check if there was a hit with this object TODO: remove closestIndex AND make it use the refraction again
                             if (refractionIndex == -1) {
                                 refractionIndex = i;
                             } else {
