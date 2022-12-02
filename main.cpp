@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 
     Coordinate centerSphere3(  -1200.0, 1500.0, 1300.0, 1);
     Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0,
-                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.7, 1.3);
+                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.5, 0.0);
     totalObjects++;
 
     Coordinate centerCube1(  -800.0, 200.0, 600.0, 1);
@@ -58,6 +58,11 @@ int main(int argc, char *argv[]) {
     Coordinate centerCube2(  -1600.0, 0.0, 700.0, 1);
     Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0,
                60.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate centerCube3(  -1800.0, 3800.0, 700.0, 1);
+    Cube cube3(centerCube3, 140/255.0, 32/255.0, 230/255.0, 1.0,
+               0.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
 //    Coordinate planeCenter2(0.0, 0.0, 5000.0, 1);
@@ -71,7 +76,8 @@ int main(int argc, char *argv[]) {
     objects[3] = &sphere3;
     objects[4] = &cube1;
     objects[5] = &cube2;
-//    objects[6] = &plane2;
+    objects[6] = &cube3;
+//    objects[7] = &plane2;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
@@ -307,8 +313,9 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                if (shadowIndex != -1 and (shadowObject[i].distance(hits[closestIndex]) < lightPosition.distance(hits[closestIndex])) ) {
-                    shadingFactor = 4;
+                if (shadowIndex != -1 and (shadowObject[shadowIndex].distance(hits[closestIndex]) < lightPosition.distance(hits[closestIndex])) ) {
+                    float transp = 1 - objects[shadowIndex]->getTransparency();
+                    shadingFactor = 3 * transp + 1;
                 } else {
                     shadingFactor = 1;
                 }
