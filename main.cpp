@@ -10,6 +10,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+//#include <GL/freeglut.h>
+//#include "Objects/freeglut_std.h"
 #endif
 
 #include "Coordinate.h"
