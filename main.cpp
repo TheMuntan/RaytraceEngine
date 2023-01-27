@@ -18,6 +18,7 @@
 #include "Objects/Sphere.h"
 #include "Objects/Cube.h"
 #include "Objects/Plane.h"
+#include "Objects/Cylinder.h"
 
 
 using namespace std; // std vector for dynamic vector size
@@ -35,7 +36,7 @@ int main(int argc, char *argv[]) {
                  0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate centerSphere1(1200.0, 500.0, 1000.0, 1);
+    Coordinate centerSphere1(1500.0, 500.0, 1000.0, 1);
     Sphere sphere1(600.0, centerSphere1, 1.0,0.1,0.0, 1.0,
                    0.0, 180.0, 0.0, 2.0, 1.0, 1.0, 0.6, 0.0, 0.0);
     totalObjects++;
@@ -65,6 +66,11 @@ int main(int argc, char *argv[]) {
                0.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
+    Coordinate centerCylinder( 900.0, 3300.0, 1500.0, 1);
+    Cylinder cylinder1(centerCylinder, 1/255.0, 255/255.0, 1/255.0, 1.0,
+               0.0, 0.0, 0.0, 500.0, 500.0, 1500.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
 //    Coordinate planeCenter2(0.0, 0.0, 5000.0, 1);
 //    Plane plane2(planeCenter2, 1.0,1.0,1.0, 1.0, 00.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
 //    totalObjects++;
@@ -77,7 +83,8 @@ int main(int argc, char *argv[]) {
     objects[4] = &cube1;
     objects[5] = &cube2;
     objects[6] = &cube3;
-//    objects[7] = &plane2;
+    objects[7] = &cylinder1;
+//    objects[8] = &plane2;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
@@ -96,7 +103,7 @@ int main(int argc, char *argv[]) {
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
     int shadingFactor = 1;
-    Coordinate lightPosition(0.0,300.0,3000.0,1); // point light coordinate
+    Coordinate lightPosition(0.0,-1000.0,2000.0,1); // point light coordinate
 //    Coordinate lightPosition(0.0,0.0,1200.0,1); // point light coordinate
 
     Coordinate eye(0.0, -2000.0, 2000.0, 1);

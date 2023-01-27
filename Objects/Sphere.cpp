@@ -22,7 +22,7 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     float B = (2 * genRay.getOrigin().getX() * genRay.getDirection().getX()) +
               (2 * genRay.getOrigin().getY() * genRay.getDirection().getY()) +
               (2 * genRay.getOrigin().getZ() * genRay.getDirection().getZ());
-    float C = pow(genRay.getOrigin().getX(), 2) + pow(genRay.getOrigin().getY(), 2) + pow(genRay.getOrigin().getZ(), 2) - 1;
+    float C = pow(genRay.getOrigin().getX(), 2) + pow(genRay.getOrigin().getY(), 2) + pow(genRay.getOrigin().getZ(), 2) - 1; // 1 is radius squared
 
     float discrim = B * B - 4 * A * C;
 
@@ -33,11 +33,11 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     float t1 = (-B - sqrt(discrim)) / (2 * A);
     float t2 = (-B + sqrt(discrim)) / (2 * A);
 
-    if (t1 < 0.0 or t2 < 0.0) {
-        return failedHit; //returns a coordinate with 0 as the last value when no hit is found
-    }
+//    if (t1 < 0.0 or t2 < 0.0) {
+//        return failedHit; //returns a coordinate with 0 as the last value when no hit is found
+//    }
 
-    if (t1 < t2) {
+    if (t1 < t2 and t1 > 0.0) {
         float tempX = genRay.getOrigin().getX() + genRay.getDirection().getX() * t1;
         float tempY = genRay.getOrigin().getY() + genRay.getDirection().getY() * t1;
         float tempZ = genRay.getOrigin().getZ() + genRay.getDirection().getZ() * t1;
@@ -45,7 +45,7 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
         Coordinate tempI1(tempX, tempY, tempZ ,1);
         Coordinate i1 = transformCoordinate(tempI1);
         return i1;
-    } else {
+    } else if (t2 > 0.0) {
 
         float tempX = genRay.getOrigin().getX() + genRay.getDirection().getX() * t2;
         float tempY = genRay.getOrigin().getY() + genRay.getDirection().getY() * t2;
