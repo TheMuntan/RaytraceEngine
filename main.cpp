@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 //    int screenX = 720, screenY = 480;
 
     // OBJECT DECLARATION STARTS HERE.
-    // COPY PASTE THE DESIRED SCENE AND REPLACE THE SECTION BELOW:
+    // COPY PASTE THE DESIRED SCENE AND REPLACE THE SECTION BELOW UNTIL THE NEXT COMMENT:
     Coordinate planeCenter1(0.0, 0.0, -6000.0, 1);
     Plane plane1(planeCenter1, 52/255.0, 204/255.0, 235/255.0, 1.0,
                  -10.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
@@ -71,7 +71,82 @@ int main(int argc, char *argv[]) {
 
     Coordinate humanFoot1(-200,-100,1550,1);
     Cube human3(humanFoot1, 252/255.0, 179/255.0, 179/255.0, 1.0,
-                  0,0,0,50.0,100.0,100.0,0.0,0.0,0.0);
+                0,30,0,10.0,60.0,100.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate humanFoot2(-200,-50,1650,1);
+    Cube human4(humanFoot2, 252/255.0, 179/255.0, 179/255.0, 1.0,
+                0,-45,0,10.0,60.0,100.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate humanMouth(220,-130,1640,1);
+    Sphere human5(20,humanMouth, 120/255.0, 31/255.0, 31/255.0, 1.0,
+                  0,0,0,1.0,1.0,1.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate humanEye1(200,-150,1665,1);
+    Sphere human6(10,humanEye1, 0/255.0, 0/255.0, 0/255.0, 1.0,
+                  0,0,0,1.0,1.0,1.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth1(-500.0,-650.0,200.0,1);
+    Cone shark5(sharkTooth1, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                -15,0,0,50.0,50.0,50.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth2(500.0,-650.0,200.0,1);
+    Cone shark6(sharkTooth2, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                -15,0,0,50.0,50.0,50.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth3(380.0,-660.0,200.0,1);
+    Cone shark7(sharkTooth3, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                -15,0,0,60.0,60.0,60.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth4(-380.0,-660.0,200.0,1);
+    Cone shark8(sharkTooth4, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                -15,0,0,60.0,60.0,60.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth5(-220.0,-660.0,220.0,1);
+    Cone shark9(sharkTooth5, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                -15,0,0,70.0,70.0,70.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth6(220.0,-660.0,220.0,1);
+    Cone shark10(sharkTooth6, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                 -15,0,0,70.0,70.0,70.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth7(70.0,-690.0,300.0,1);
+    Cone shark11(sharkTooth7, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                 -15,0,0,70.0,70.0,120.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth8(-70.0,-690.0,300.0,1);
+    Cone shark12(sharkTooth8, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                 -15,0,0,70.0,70.0,120.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth9(-650.0,-650.0,200.0,1);
+    Cone shark13(sharkTooth9, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                 -15,0,0,30.0,30.0,30.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth10(-580.0,-660.0,200.0,1);
+    Cone shark14(sharkTooth10, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                 -15,0,0,30.0,30.0,30.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth11(650.0,-650.0,200.0,1);
+    Cone shark15(sharkTooth11, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                 -15,0,0,30.0,30.0,30.0,0.0,0.0,0.0);
+    totalObjects++;
+
+    Coordinate sharkTooth12(580.0,-660.0,200.0,1);
+    Cone shark16(sharkTooth12, 255/255.0, 255/255.0, 255/255.0, 1.0,
+                 -15,0,0,30.0,30.0,30.0,0.0,0.0,0.0);
     totalObjects++;
 
 
@@ -84,8 +159,24 @@ int main(int argc, char *argv[]) {
     objects[5] = &human1;
     objects[6] = &human2;
     objects[7] = &human3;
+    objects[8] = &human4;
+    objects[9] = &human5;
+    objects[10] = &human6;
+    objects[11] = &shark5;
+    objects[12] = &shark6;
+    objects[13] = &shark7;
+    objects[14] = &shark8;
+    objects[15] = &shark9;
+    objects[16] = &shark10;
+    objects[17] = &shark11;
+    objects[18] = &shark12;
+    objects[19] = &shark13;
+    objects[20] = &shark14;
+    objects[21] = &shark15;
+    objects[22] = &shark16;
 
     Coordinate lightPosition(0.0, -2000.0, 2000.0, 1); // point light coordinate
+
     // OBJECT DECLARATION ENDS HERE.
 
 
