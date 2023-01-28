@@ -19,6 +19,7 @@
 #include "Objects/Cube.h"
 #include "Objects/Plane.h"
 #include "Objects/Cylinder.h"
+#include "Objects/Cone.h"
 
 
 using namespace std; // std vector for dynamic vector size
@@ -66,9 +67,14 @@ int main(int argc, char *argv[]) {
                0.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate centerCylinder( 900.0, 3300.0, 1500.0, 1);
-    Cylinder cylinder1(centerCylinder, 1/255.0, 255/255.0, 1/255.0, 1.0,
+    Coordinate centerCylinder1( 900.0, 3300.0, 1500.0, 1);
+    Cylinder cylinder1(centerCylinder1, 1/255.0, 255/255.0, 1/255.0, 1.0,
                0.0, 0.0, 0.0, 500.0, 500.0, 1500.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate centerCone1(1700, -200, 800, 1);
+    Cone cone1(centerCone1, 0.0, 1.0, 0.0, 1.0,
+                   0.0, 0.0, 0.0, 600.0, 600.0, 600.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
 //    Coordinate planeCenter2(0.0, 0.0, 5000.0, 1);
@@ -84,7 +90,8 @@ int main(int argc, char *argv[]) {
     objects[5] = &cube2;
     objects[6] = &cube3;
     objects[7] = &cylinder1;
-//    objects[8] = &plane2;
+    objects[8] = &cone1;
+//    objects[9] = &plane2;
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
