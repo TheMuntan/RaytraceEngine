@@ -59,3 +59,5 @@
     objects[7] = &cylinder1;
     objects[8] = &cone1;
     objects[9] = &plane2;
+
+    Coordinate lightPosition(0.0,-1000.0,2000.0,1); // point light coordinate

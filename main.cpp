@@ -32,66 +32,63 @@ int main(int argc, char *argv[]) {
     int screenX = 1280, screenY = 720;
 //    int screenX = 720, screenY = 480;
 
-    Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
-    Plane plane1(planeCenter1, 88/255.0, 0/255.0, 133/255.0, 1.0,
-                 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
+    // OBJECT DECLARATION STARTS HERE.
+    // COPY PASTE THE DESIRED SCENE AND REPLACE THE SECTION BELOW:
+    Coordinate planeCenter1(0.0, 0.0, -6000.0, 1);
+    Plane plane1(planeCenter1, 52/255.0, 204/255.0, 235/255.0, 1.0,
+                 -10.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate centerSphere1(1500.0, 500.0, 1000.0, 1);
-    Sphere sphere1(600.0, centerSphere1, 1.0,0.1,0.0, 1.0,
-                   0.0, 180.0, 0.0, 2.0, 1.0, 1.0, 0.6, 0.0, 0.0);
+    Coordinate sharkHead(0.0,1500.0,800.0,1);
+    Cone shark1(sharkHead, 36/255.0, 101/255.0, 166/255.0, 1.0,
+                0,0,0,1800,2000,3000,0.0,0.0,0.0);
     totalObjects++;
 
-    Coordinate centerSphere2(300, 350, 160, 1);
-    Sphere sphere2(150.0, centerSphere2, 0.0, 1.0, 0.0, 1.0,
-                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
+    Coordinate sharkBody(0.0,-100.0,-1200.0,1);
+    Cylinder shark2(sharkBody, 166/255.0, 207/255.0, 247/255.0, 1.0,
+                    -30,0,0,1110,700,1100,0.0,0.0,0.0);
     totalObjects++;
 
-    Coordinate centerSphere3(  -1200.0, 1500.0, 1300.0, 1);
-    Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0,
-                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.5, 0.0);
+    Coordinate sharkEye1(1200.0,1500.0,-1200.0,1);
+    Sphere shark3(100,sharkEye1, 0/255.0, 0/255.0, 0/255.0, 1.0,
+                  -15,0,0,1.0,1.0,1.0,0.0,0.0,0.0);
     totalObjects++;
 
-    Coordinate centerCube1(  -800.0, 200.0, 600.0, 1);
-    Cube cube1(centerCube1, 66/255.0, 135/255.0, 245/255.0, 1.0,
-               0.0, 0.0, 0.0, 300.0, 300.0, 300.0, 0.0, 0.0, 0.0);
+    Coordinate sharkEye2(-1200.0,1500.0,-1200.0,1);
+    Sphere shark4(100,sharkEye2, 0/255.0, 0/255.0, 0/255.0, 1.0,
+                  -15,0,0,1.0,1.0,1.0,0.0,0.0,0.0);
     totalObjects++;
 
-    Coordinate centerCube2(  -1600.0, 0.0, 700.0, 1);
-    Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0,
-               60.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
+    Coordinate humanBody(0,-100,1600,1);
+    Sphere human1(100,humanBody, 252/255.0, 179/255.0, 179/255.0, 1.0,
+                  0,0,0,2.0,1.0,0.5,0.0,0.0,0.0);
     totalObjects++;
 
-    Coordinate centerCube3(  -1800.0, 3800.0, 700.0, 1);
-    Cube cube3(centerCube3, 140/255.0, 32/255.0, 230/255.0, 1.0,
-               0.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
+    Coordinate humanHead(200,-100,1650,1);
+    Sphere human2(50,humanHead, 252/255.0, 179/255.0, 179/255.0, 1.0,
+                  0,0,0,1.0,1.0,1.0,0.0,0.0,0.0);
     totalObjects++;
 
-    Coordinate centerCylinder1( 900.0, 3300.0, 1500.0, 1);
-    Cylinder cylinder1(centerCylinder1, 1/255.0, 255/255.0, 1/255.0, 1.0,
-               0.0, 0.0, 0.0, 500.0, 500.0, 1500.0, 0.0, 0.0, 0.0);
+    Coordinate humanFoot1(-200,-100,1550,1);
+    Cube human3(humanFoot1, 252/255.0, 179/255.0, 179/255.0, 1.0,
+                  0,0,0,50.0,100.0,100.0,0.0,0.0,0.0);
     totalObjects++;
 
-    Coordinate centerCone1(1700, -200, 800, 1);
-    Cone cone1(centerCone1, 1.0, 0.3, 0.0, 1.0,
-                   0.0, 0.0, 0.0, 600.0, 600.0, 600.0, 0.0, 0.0, 0.0);
-    totalObjects++;
-
-    Coordinate planeCenter2(0.0, 0.0, 5000.0, 1);
-    Plane plane2(planeCenter2, 1.0,1.0,1.0, 1.0, 00.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
-    totalObjects++;
 
     Object *objects[totalObjects];
     objects[0] = &plane1;
-    objects[1] = &sphere1;
-    objects[2] = &sphere2;
-    objects[3] = &sphere3;
-    objects[4] = &cube1;
-    objects[5] = &cube2;
-    objects[6] = &cube3;
-    objects[7] = &cylinder1;
-    objects[8] = &cone1;
-    objects[9] = &plane2;
+    objects[1] = &shark1;
+    objects[2] = &shark2;
+    objects[3] = &shark3;
+    objects[4] = &shark4;
+    objects[5] = &human1;
+    objects[6] = &human2;
+    objects[7] = &human3;
+
+    Coordinate lightPosition(0.0, -2000.0, 2000.0, 1); // point light coordinate
+    // OBJECT DECLARATION ENDS HERE.
+
+
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
@@ -110,8 +107,6 @@ int main(int argc, char *argv[]) {
     float camLength = 1000.0; // focal length | distance between eye and near plane
 
     int shadingFactor = 1;
-    Coordinate lightPosition(0.0,-1000.0,2000.0,1); // point light coordinate
-//    Coordinate lightPosition(0.0,0.0,1200.0,1); // point light coordinate
 
     int moveX = 0;
     int moveY = 0;
@@ -142,6 +137,7 @@ int main(int argc, char *argv[]) {
 
                 Coordinate screenWorld1 = screenCenter + (u * (c / float(screenX) - 1));
                 Coordinate screenWorldCoordinate = screenWorld1 + (v * (r / float(screenY) - 1));
+                eye.setCoords(eye.getX(),eye.getY(),eye.getZ(),eye.isPoint());
                 Coordinate worldVector = screenWorldCoordinate - eye;
 
                 worldVector.normalise();

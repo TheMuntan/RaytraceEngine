@@ -44,13 +44,13 @@ vector<float> Plane::getShading(Coordinate hitLocation, Coordinate lightDirectio
     float tempY = (invMatrix[1][0] * hitLocation.getX() + invMatrix[1][1] * hitLocation.getY() +
                    invMatrix[1][2] * hitLocation.getZ() + invMatrix[1][3] * hitLocation.isPoint());
 
-    int squareSize = 32;
-    if (sin(tempX/squareSize) > 0.0 and sin(tempY/squareSize) > 0.0 or (sin(tempX/squareSize) < 0.0 and sin(tempY/squareSize) < 0.0)) {
-        shading = {1.0, 1.0, 1.0, 1.0};
-
-    } else if (sin(tempX/squareSize) > 0.0 and sin(tempY/squareSize) < 0.0 or (sin(tempX/squareSize) < 0.0 and sin(tempY/squareSize) > 0.0)) {
+//    int squareSize = 32; //uncomment this section to add checkerboard pattern
+//    if (sin(tempX/squareSize) > 0.0 and sin(tempY/squareSize) > 0.0 or (sin(tempX/squareSize) < 0.0 and sin(tempY/squareSize) < 0.0)) {
+//        shading = {1.0, 1.0, 1.0, 1.0};
+//
+//    } else if (sin(tempX/squareSize) > 0.0 and sin(tempY/squareSize) < 0.0 or (sin(tempX/squareSize) < 0.0 and sin(tempY/squareSize) > 0.0)) {
         shading = shadingDefault;
-    }
+//    }
 
     Coordinate norm(0.0, 0.0, 1.0, 0);
     tempX = (matrix[0][0] * norm.getX() + matrix[0][1] * norm.getY() +
