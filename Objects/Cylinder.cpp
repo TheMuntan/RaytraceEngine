@@ -7,8 +7,8 @@
 
 Cylinder::Cylinder(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY,
                    float rotateZ, float scaleX, float scaleY, float scaleZ, float reflection, float transparency,
-                   float refraction) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ,
-                                              reflection, transparency, refraction) {}
+                   float refraction, float roughness) : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ,
+                                              reflection, transparency, refraction, roughness) {}
 
 Coordinate Cylinder::hit(Ray ray) {
     Coordinate failedHit(0, 0, 0, 0);
@@ -78,15 +78,25 @@ Coordinate Cylinder::hit(Ray ray) {
 }
 
 Coordinate Cylinder::getNorm(Coordinate hitLocation) {
+    float noiseX = ((float) rand() / (RAND_MAX)) - 0.5;
+    float noiseY = ((float) rand() / (RAND_MAX)) - 0.5;
+    float noiseZ = ((float) rand() / (RAND_MAX)) - 0.5;
+
     Coordinate invLocation = invCoordinate(hitLocation);
     if (invLocation.getZ() >= 0.4999) { // check if we are on the top or bottom of the cylinder
         Coordinate invNorm(0.0,0.0,-0.5,0);
+        invNorm.normalise();
+        invNorm.setCoords(invNorm.getX() + noiseX * this->getRoughness(), invNorm.getY() + noiseY * this->getRoughness(),
+                          invNorm.getZ() + noiseZ * this->getRoughness(),invNorm.isPoint());
         invNorm.normalise();
         Coordinate norm = transformCoordinate(invNorm);
         norm.normalise();
         return norm;
     } else if (invLocation.getZ() <= -0.4999) {
         Coordinate invNorm(0.0,0.0,0.5,0);
+        invNorm.normalise();
+        invNorm.setCoords(invNorm.getX() + noiseX * this->getRoughness(), invNorm.getY() + noiseY * this->getRoughness(),
+                          invNorm.getZ() + noiseZ * this->getRoughness(),invNorm.isPoint());
         invNorm.normalise();
         Coordinate norm = transformCoordinate(invNorm);
         norm.normalise();
@@ -96,7 +106,9 @@ Coordinate Cylinder::getNorm(Coordinate hitLocation) {
     Coordinate center(0.0,0.0,0.0,1);
     Coordinate invNorm = invLocation - center;
     invNorm.normalise();
-    invNorm.setCoords(invNorm.getX(),invNorm.getY(),0.0,invNorm.isPoint());
+    invNorm.setCoords(invNorm.getX() + noiseX * this->getRoughness(), invNorm.getY() + noiseY * this->getRoughness(),
+                      0.0 + noiseZ * this->getRoughness(),invNorm.isPoint());
+    invNorm.normalise();
     Coordinate norm = transformCoordinate(invNorm);
     norm.normalise();
 //    Coordinate norm(0.0,0.0,1.0,0);

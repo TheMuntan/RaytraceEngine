@@ -5,8 +5,8 @@
 #include "Plane.h"
 
 Plane::Plane(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ,
-             float scaleX, float scaleY, float scaleZ, float reflection, float transparency, float refraction)
-        : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ, reflection, transparency, refraction) {}
+             float scaleX, float scaleY, float scaleZ, float reflection, float transparency, float refraction, float roughness)
+        : Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX, scaleY, scaleZ, reflection, transparency, refraction, roughness) {}
 
 Coordinate Plane::hit(Ray ray) {
     Coordinate failedHit(0, 0, 0, 0);
@@ -28,7 +28,14 @@ Coordinate Plane::hit(Ray ray) {
 }
 
 Coordinate Plane::getNorm(Coordinate hitLocation) {
+    float noiseX = ((float) rand() / (RAND_MAX)) - 0.5;
+    float noiseY = ((float) rand() / (RAND_MAX)) - 0.5;
+    float noiseZ = ((float) rand() / (RAND_MAX)) - 0.5;
+
     Coordinate invNorm(0.0,0.0,1.0,0);
+    invNorm.normalise();
+    invNorm.setCoords(invNorm.getX() + noiseX * this->getRoughness(), invNorm.getY() + noiseY * this->getRoughness(),
+                      invNorm.getZ() + noiseZ * this->getRoughness(),invNorm.isPoint());
     invNorm.normalise();
     Coordinate norm = transformCoordinate(invNorm);
     norm.normalise();

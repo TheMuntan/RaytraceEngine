@@ -1,0 +1,16 @@
+    Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
+    Plane plane1(planeCenter1, 161/255.0, 39/255.0, 124/255.0, 1.0,
+                 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate centerSphere1(0.0, 200.0, 800.0, 1);
+    Sphere sphere1(600.0, centerSphere1, 1.0,0.1,0.0, 1.0,
+                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+
+    Object *objects[totalObjects];
+    objects[0] = &plane1;
+    objects[1] = &sphere1;
+
+    Coordinate lightPosition(0.0,-1000.0,2000.0,1); // point light coordinate

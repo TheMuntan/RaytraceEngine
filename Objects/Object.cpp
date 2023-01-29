@@ -5,9 +5,9 @@
 #include "Object.h"
 
 Object::Object(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-               float scaleY, float scaleZ, float reflection, float transparency, float refraction) : center(center), r(r), g(g), b(b), rotateX(rotateX), rotateY(rotateY),
+               float scaleY, float scaleZ, float reflection, float transparency, float refraction, float roughness) : center(center), r(r), g(g), b(b), rotateX(rotateX), rotateY(rotateY),
                                                                 rotateZ(rotateZ), scaleX(scaleX), scaleY(scaleY), scaleZ(scaleZ), reflection(reflection) , transparency(transparency),
-                                                                refraction(refraction) {
+                                                                refraction(refraction), roughness(roughness) {
     rgba.push_back(r);
     rgba.push_back(g);
     rgba.push_back(b);
@@ -256,5 +256,9 @@ Coordinate Object::refract(Coordinate hitLocation, Coordinate worldVector) {
 
 float Object::getRefraction() const {
     return refraction;
+}
+
+float Object::getRoughness() const {
+    return roughness;
 }
 

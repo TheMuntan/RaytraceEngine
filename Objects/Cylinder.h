@@ -12,7 +12,7 @@ class Cylinder : public Object {
 
 public:
     Cylinder(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-         float scaleY, float scaleZ, float reflection, float transparency, float refraction);
+         float scaleY, float scaleZ, float reflection, float transparency, float refraction, float roughness);
 
     Coordinate hit(Ray ray) override;
 

@@ -20,7 +20,6 @@
 #include "Objects/Plane.h"
 #include "Objects/Cylinder.h"
 #include "Objects/Cone.h"
-#include <iostream>
 
 using namespace std; // std vector for dynamic vector size
 
@@ -35,50 +34,53 @@ int main(int argc, char *argv[]) {
     // OBJECT DECLARATION STARTS HERE.
     // COPY PASTE THE DESIRED SCENE AND REPLACE THE SECTION BELOW UNTIL THE NEXT COMMENT:
 
-
     Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
     Plane plane1(planeCenter1, 88/255.0, 0/255.0, 133/255.0, 1.0,
-                 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
+                 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.3, 0.0, 0.0, 0.1);
     totalObjects++;
 
     Coordinate centerSphere1(1500.0, 500.0, 1000.0, 1);
     Sphere sphere1(600.0, centerSphere1, 1.0,0.1,0.0, 1.0,
-                   0.0, 180.0, 0.0, 2.0, 1.0, 1.0, 0.6, 0.0, 0.0);
+                   0.0, 180.0, 0.0, 2.0, 1.0, 1.0, 0.6, 0.0, 0.0, 0.2);
     totalObjects++;
 
     Coordinate centerSphere2(300, 350, 160, 1);
     Sphere sphere2(150.0, centerSphere2, 0.0, 1.0, 0.0, 1.0,
-                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
+                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
     Coordinate centerSphere3(  -1200.0, 1500.0, 1300.0, 1);
     Sphere sphere3(1000.0, centerSphere3, 189/255.0, 58/255.0, 167/255.0, 1.0,
-                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.5, 0.0);
+                   0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.5, 1.5, 0.0);
     totalObjects++;
 
-    Coordinate centerCube1(  -800.0, 200.0, 600.0, 1);
+    Coordinate centerCube1(  -800.0, 100.0, 600.0, 1);
     Cube cube1(centerCube1, 66/255.0, 135/255.0, 245/255.0, 1.0,
-               0.0, 0.0, 0.0, 300.0, 300.0, 300.0, 0.0, 0.0, 0.0);
+               0.0, 0.0, 0.0, 300.0, 300.0, 300.0, 0.0, 0.6, 0.0, 0.0);
     totalObjects++;
 
     Coordinate centerCube2(  -1600.0, 0.0, 700.0, 1);
     Cube cube2(centerCube2, 235/255.0, 210/255.0, 26/255.0, 1.0,
-               60.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
+               60.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
     Coordinate centerCube3(  -1800.0, 3800.0, 700.0, 1);
     Cube cube3(centerCube3, 140/255.0, 32/255.0, 230/255.0, 1.0,
-               0.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0);
+               0.0, 0.0, 0.0, 1000.0, 1000.0, 1000.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
     Coordinate centerCylinder1( 900.0, 3300.0, 1500.0, 1);
     Cylinder cylinder1(centerCylinder1, 1/255.0, 255/255.0, 1/255.0, 1.0,
-                       0.0, 0.0, 0.0, 500.0, 500.0, 1500.0, 0.0, 0.0, 0.0);
+                       0.0, 0.0, 0.0, 500.0, 500.0, 1500.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
     Coordinate centerCone1(1700, -200, 800, 1);
     Cone cone1(centerCone1, 1.0, 0.3, 0.0, 1.0,
-               0.0, 0.0, 0.0, 600.0, 600.0, 600.0, 0.0, 0.0, 0.0);
+               0.0, 0.0, 0.0, 600.0, 600.0, 600.0, 0.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate planeCenter2(0.0, 10000.0, 5000.0, 1);
+    Plane plane2(planeCenter2, 1.0,1.0,1.0, 1.0, 90.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
     Object *objects[totalObjects];
@@ -91,6 +93,7 @@ int main(int argc, char *argv[]) {
     objects[6] = &cube3;
     objects[7] = &cylinder1;
     objects[8] = &cone1;
+    objects[9] = &plane2;
 
     Coordinate lightPosition(0.0,-1000.0,2000.0,1); // point light coordinate
 
@@ -123,9 +126,12 @@ int main(int argc, char *argv[]) {
     int lookY = 0;
     int lookZ = 0;
 
+    Coordinate eye(0.0, -2000.0, 2000.0, 1);
+    Coordinate lookPoint(0.0, 200.0, 800.0, 1);
+
     do {
-        Coordinate eye(0.0 + moveX, -2000.0 + moveY, 2000.0 + moveZ, 1);
-        Coordinate lookPoint(0.0 + lookX, 200.0 + lookY, 800.0 + lookZ, 1);
+        eye.setCoords(eye.getX() + moveX, eye.getY() + moveY, eye.getZ() + moveZ, 1);
+        lookPoint.setCoords(lookPoint.getX() + lookX, lookPoint.getY() + lookY, lookPoint.getZ() + lookZ, 1);
         Coordinate lookVector = lookPoint - eye;
         lookVector.normalise();
         Coordinate up(0.0, 0.0, 1.0, 0);

@@ -10,8 +10,8 @@
 using namespace std;
 
 Sphere::Sphere(float radius, const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-               float scaleY, float scaleZ, float reflection, float transparency, float refraction) :
-               Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius, reflection, transparency, refraction), radius(radius) {}
+               float scaleY, float scaleZ, float reflection, float transparency, float refraction, float roughness) :
+               Object(center, r, g, b, a, rotateX, rotateY, rotateZ, scaleX*radius, scaleY*radius, scaleZ*radius, reflection, transparency, refraction, roughness), radius(radius) {}
 
 Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
     Coordinate failedHit(0, 0, 0, 0);
@@ -60,18 +60,18 @@ Coordinate Sphere::hit(Ray ray) { // first index is row, second index is column
 
 
 Coordinate Sphere::getNorm(Coordinate hitLocation) {
-
+    float noiseX = ((float) rand() / (RAND_MAX)) - 0.5;
+    float noiseY = ((float) rand() / (RAND_MAX)) - 0.5;
+    float noiseZ = ((float) rand() / (RAND_MAX)) - 0.5;
     Coordinate invLocation = invCoordinate(hitLocation);
     Coordinate center(0.0,0.0,0.0,1);
     Coordinate invNorm = invLocation - center;
     invNorm.normalise();
+    invNorm.setCoords(invNorm.getX() + noiseX * this->getRoughness(), invNorm.getY() + noiseY * this->getRoughness(),
+                      invNorm.getZ() + noiseZ * this->getRoughness(),invNorm.isPoint());
+    invNorm.normalise();
     Coordinate norm = transformCoordinate(invNorm);
     norm.normalise();
-//    float randoms = static_cast <float> (rand())/static_cast <float> (RAND_MAX);
-//    float randoms2 = static_cast <float> (rand())/static_cast <float> (RAND_MAX);
-//    float randoms3 = static_cast <float> (rand())/static_cast <float> (RAND_MAX);
-//    Coordinate rough(norm.getX() + randoms/100.0-0.005, norm.getY()+ randoms2/100.0-0.005, norm.getZ()+ randoms3/100.0-0.005, 0);
-//    rough.normalise();
     return norm;
 }
 

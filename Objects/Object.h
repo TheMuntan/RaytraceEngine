@@ -21,13 +21,14 @@ class Object {
     float reflection;
     float transparency;
     float refraction;
+    float roughness;
     vector<float> rgba;
 public:
     float matrix[4][4];
     float invMatrix[4][4];
 
     Object(const Coordinate &center, float r, float g, float b, float a, float rotateX, float rotateY, float rotateZ, float scaleX,
-           float scaleY, float scaleZ, float reflection, float transparency, float refraction);
+           float scaleY, float scaleZ, float reflection, float transparency, float refraction, float roughness);
 
     float getA() const;
 
@@ -50,6 +51,8 @@ public:
     float getTransparency() const;
 
     float getReflection() const;
+
+    float getRoughness() const;
 
     virtual Coordinate hit(Ray ray);
 
