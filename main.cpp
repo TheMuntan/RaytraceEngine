@@ -35,184 +35,143 @@ int main(int argc, char *argv[]) {
     // OBJECT DECLARATION STARTS HERE.
     // COPY PASTE THE DESIRED SCENE AND REPLACE THE SECTION BELOW UNTIL THE NEXT COMMENT:
 
-    Coordinate planeCenter1(0.0, 0.0, -6000.0, 1);
-    Plane plane1(planeCenter1, 52/255.0, 204/255.0, 235/255.0, 1.0,
-                 -10.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
+    Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
+    Plane plane1(planeCenter1, 255/255.0, 255/255.0, 255/255.0, 0.1,
+                 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkHead(0.0,1500.0,800.0,1);
-    Cone shark1(sharkHead, 36/255.0, 101/255.0, 166/255.0, 1.0,
-                0,0,0,1800,2000,3000,0.0,0.0,0.0, 0.0);
+    Coordinate carCenter1(0.0, 0.0, 0.0, 1);
+    Cube cube1(carCenter1, 255/255.0, 56/255.0, 56/255.0, 1.0,
+               0.0, 0.0, 0.0, 3000.0, 1000.0, 1000.0, 0.5, 0.0, 0.0, 0.005);
     totalObjects++;
 
-    Coordinate sharkBody(0.0,-100.0,-1200.0,1);
-    Cylinder shark2(sharkBody, 166/255.0, 207/255.0, 247/255.0, 1.0,
-                    -30,0,0,1110,700,1100,0.0,0.0,0.0, 0.0);
+    Coordinate carCenter2(0.0, 500.0, 100.0, 1);
+    Sphere sphere1(100,carCenter2, 255/255.0, 56/255.0, 56/255.0, 1.0,
+                   0.0, 0.0, 0.0, 16.5, 10.0, 10.0, 0.5, 0.0, 0.0, 0.05);
     totalObjects++;
 
-    Coordinate sharkEye1(1200.0,1500.0,-1200.0,1);
-    Sphere shark3(100,sharkEye1, 0/255.0, 0/255.0, 0/255.0, 1.0,
-                  -15,0,0,1.0,1.0,1.0,0.0,0.0,0.0, 0.0);
+    Coordinate carWheel1(1100.0, -500.0, 180.0, 1);
+    Sphere wheel1(1,carWheel1, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                  -90.0, 0.0, 0.0, 300.0, 100.0, 300.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkEye2(-1200.0,1500.0,-1200.0,1);
-    Sphere shark4(100,sharkEye2, 0/255.0, 0/255.0, 0/255.0, 1.0,
-                  -15,0,0,1.0,1.0,1.0,0.0,0.0,0.0, 0.0);
+    Coordinate carWheel2(-1100.0, -500.0, 180.0, 1);
+    Sphere wheel2(1,carWheel2, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                  -90.0, 0.0, 0.0, 300.0, 100.0, 300.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate humanBody(0,-100,1600,1);
-    Sphere human1(100,humanBody, 252/255.0, 179/255.0, 179/255.0, 1.0,
-                  0,0,0,2.0,1.0,0.5,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter1(5000.0, 13000.0, 0.0, 1);
+    Cube building1(buildingCenter1, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate humanHead(200,-100,1650,1);
-    Sphere human2(50,humanHead, 252/255.0, 179/255.0, 179/255.0, 1.0,
-                  0,0,0,1.0,1.0,1.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter2(-5000.0, 13000.0, 0.0, 1);
+    Cube building2(buildingCenter2, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate humanFoot1(-200,-100,1550,1);
-    Cube human3(humanFoot1, 252/255.0, 179/255.0, 179/255.0, 1.0,
-                0,30,0,10.0,60.0,100.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter3(5000.0, 30000.0, 0.0, 1);
+    Cube building3(buildingCenter3, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate humanFoot2(-200,-50,1650,1);
-    Cube human4(humanFoot2, 252/255.0, 179/255.0, 179/255.0, 1.0,
-                0,-45,0,10.0,60.0,100.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter4(-5000.0, 30000.0, 0.0, 1);
+    Cube building4(buildingCenter4, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate humanMouth(220,-130,1640,1);
-    Sphere human5(20,humanMouth, 120/255.0, 31/255.0, 31/255.0, 1.0,
-                  0,0,0,1.0,1.0,1.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter5(5000.0, 47000.0, 0.0, 1);
+    Cube building5(buildingCenter5, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate humanEye1(200,-150,1665,1);
-    Sphere human6(10,humanEye1, 0/255.0, 0/255.0, 0/255.0, 1.0,
-                  0,0,0,1.0,1.0,1.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter6(-5000.0, 47000.0, 0.0, 1);
+    Cube building6(buildingCenter6, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth1(-500.0,-650.0,200.0,1);
-    Cone shark5(sharkTooth1, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                -15,0,0,50.0,50.0,50.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter7(5000.0, 64000.0, 0.0, 1);
+    Cube building7(buildingCenter7, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth2(500.0,-650.0,200.0,1);
-    Cone shark6(sharkTooth2, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                -15,0,0,50.0,50.0,50.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter8(-5000.0, 64000.0, 0.0, 1);
+    Cube building8(buildingCenter8, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth3(380.0,-660.0,200.0,1);
-    Cone shark7(sharkTooth3, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                -15,0,0,60.0,60.0,60.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter9(20000.0, 13000.0, 0.0, 1);
+    Cube building9(buildingCenter9, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth4(-380.0,-660.0,200.0,1);
-    Cone shark8(sharkTooth4, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                -15,0,0,60.0,60.0,60.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter10(-20000.0, 13000.0, 0.0, 1);
+    Cube building10(buildingCenter10, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth5(-220.0,-660.0,220.0,1);
-    Cone shark9(sharkTooth5, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                -15,0,0,70.0,70.0,70.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter11(5000.0, -13000.0, 0.0, 1);
+    Cube building11(buildingCenter11, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth6(220.0,-660.0,220.0,1);
-    Cone shark10(sharkTooth6, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                 -15,0,0,70.0,70.0,70.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter12(-5000.0, -13000.0, 0.0, 1);
+    Cube building12(buildingCenter12, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth7(70.0,-690.0,300.0,1);
-    Cone shark11(sharkTooth7, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                 -15,0,0,70.0,70.0,120.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter13(5000.0, 95000.0, 0.0, 1);
+    Cube building13(buildingCenter13, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth8(-70.0,-690.0,300.0,1);
-    Cone shark12(sharkTooth8, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                 -15,0,0,70.0,70.0,120.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter14(-5000.0, 95000.0, 0.0, 1);
+    Cube building14(buildingCenter14, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth9(-650.0,-650.0,200.0,1);
-    Cone shark13(sharkTooth9, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                 -15,0,0,30.0,30.0,30.0,0.0,0.0,0.0, 0.0);
+    Coordinate roadCenter(0.0, 800.0, 0.0, 1);
+    Cube road1(roadCenter, 0/255.0, 0/255.0, 0/255.0, 1.0,
+               0.0, 0.0, 0.0, 100000.0, 3000.0, 10.0, 0.0, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth10(-580.0,-660.0,200.0,1);
-    Cone shark14(sharkTooth10, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                 -15,0,0,30.0,30.0,30.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter15(17000.0, -13000.0, 0.0, 1);
+    Cube building15(buildingCenter15, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                    0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth11(650.0,-650.0,200.0,1);
-    Cone shark15(sharkTooth11, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                 -15,0,0,30.0,30.0,30.0,0.0,0.0,0.0, 0.0);
+    Coordinate buildingCenter16(-17000.0, -13000.0, 0.0, 1);
+    Cube building16(buildingCenter16, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                    0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
     totalObjects++;
 
-    Coordinate sharkTooth12(580.0,-660.0,200.0,1);
-    Cone shark16(sharkTooth12, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                 -15,0,0,30.0,30.0,30.0,0.0,0.0,0.0, 0.0);
-    totalObjects++;
-
-    Coordinate centerBubble1(1000.0,-500.0,-600.0,1);
-    Sphere bubble1(100,centerBubble1, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                   -15,0,0,1.0,1.0,1.0,0.0,0.5,0.0, 0.0);
-    totalObjects++;
-
-    Coordinate centerBubble2(1200.0,-300.0,-600.0,1);
-    Sphere bubble2(80,centerBubble2, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                   -15,0,0,1.0,1.0,1.0,0.0,0.5,0.0, 0.0);
-    totalObjects++;
-
-    Coordinate centerBubble3(1200.0,-650.0,-600.0,1);
-    Sphere bubble3(60,centerBubble3, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                   -15,0,0,1.0,1.0,1.0,0.0,0.5,0.0, 0.0);
-    totalObjects++;
-
-    Coordinate centerBubble4(-1100.0,-480.0,-500.0,1);
-    Sphere bubble4(100,centerBubble4, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                   -15,0,0,1.0,1.0,1.0,0.0,0.5,0.0, 0.0);
-    totalObjects++;
-
-    Coordinate centerBubble5(-1400.0,-270.0,-590.0,1);
-    Sphere bubble5(80,centerBubble5, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                   -15,0,0,1.0,1.0,1.0,0.0,0.5,0.0, 0.0);
-    totalObjects++;
-
-    Coordinate centerBubble6(-900.0,-630.0,-580.0,1);
-    Sphere bubble6(60,centerBubble6, 255/255.0, 255/255.0, 255/255.0, 1.0,
-                   -15,0,0,1.0,1.0,1.0,0.0,0.5,0.0, 0.0);
-    totalObjects++;
 
     Object *objects[totalObjects];
     objects[0] = &plane1;
-    objects[1] = &shark1;
-    objects[2] = &shark2;
-    objects[3] = &shark3;
-    objects[4] = &shark4;
-    objects[5] = &human1;
-    objects[6] = &human2;
-    objects[7] = &human3;
-    objects[8] = &human4;
-    objects[9] = &human5;
-    objects[10] = &human6;
-    objects[11] = &shark5;
-    objects[12] = &shark6;
-    objects[13] = &shark7;
-    objects[14] = &shark8;
-    objects[15] = &shark9;
-    objects[16] = &shark10;
-    objects[17] = &shark11;
-    objects[18] = &shark12;
-    objects[19] = &shark13;
-    objects[20] = &shark14;
-    objects[21] = &shark15;
-    objects[22] = &shark16;
-    objects[23] = &bubble1;
-    objects[24] = &bubble2;
-    objects[25] = &bubble3;
-    objects[26] = &bubble4;
-    objects[27] = &bubble5;
-    objects[28] = &bubble6;
+    objects[1] = &cube1;
+    objects[2] = &sphere1;
+    objects[3] = &wheel1;
+    objects[4] = &wheel2;
+    objects[5] = &building1;
+    objects[6] = &building2;
+    objects[7] = &building3;
+    objects[8] = &building4;
+    objects[9] = &building5;
+    objects[10] = &building6;
+    objects[11] = &building7;
+    objects[12] = &building8;
+    objects[13] = &building9;
+    objects[14] = &building10;
+    objects[15] = &building11;
+    objects[16] = &building12;
+    objects[17] = &building13;
+    objects[18] = &building14;
+    objects[19] = &road1;
+    objects[20] = &building15;
+    objects[21] = &building16;
 
-    Coordinate lightPosition(0.0, -2000.0, 2000.0, 1); // point light coordinate
 
+    Coordinate lightPosition(0.0,-1000.0,2000.0,1); // point light coordinate
     // OBJECT DECLARATION ENDS HERE.
 
 

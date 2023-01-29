@@ -1,0 +1,125 @@
+    Coordinate planeCenter1(0.0, 0.0, 0.0, 1);
+    Plane plane1(planeCenter1, 255/255.0, 255/255.0, 255/255.0, 0.1,
+                 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate carCenter1(0.0, 0.0, 0.0, 1);
+    Cube cube1(carCenter1, 255/255.0, 56/255.0, 56/255.0, 1.0,
+               0.0, 0.0, 0.0, 3000.0, 1000.0, 1000.0, 0.5, 0.0, 0.0, 0.005);
+    totalObjects++;
+
+    Coordinate carCenter2(0.0, 500.0, 100.0, 1);
+    Sphere sphere1(100,carCenter2, 255/255.0, 56/255.0, 56/255.0, 1.0,
+                   0.0, 0.0, 0.0, 16.5, 10.0, 10.0, 0.5, 0.0, 0.0, 0.05);
+    totalObjects++;
+
+    Coordinate carWheel1(1100.0, -500.0, 180.0, 1);
+    Sphere wheel1(1,carWheel1, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                  -90.0, 0.0, 0.0, 300.0, 100.0, 300.0, 0.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate carWheel2(-1100.0, -500.0, 180.0, 1);
+    Sphere wheel2(1,carWheel2, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                  -90.0, 0.0, 0.0, 300.0, 100.0, 300.0, 0.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter1(5000.0, 13000.0, 0.0, 1);
+    Cube building1(buildingCenter1, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter2(-5000.0, 13000.0, 0.0, 1);
+    Cube building2(buildingCenter2, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter3(5000.0, 30000.0, 0.0, 1);
+    Cube building3(buildingCenter3, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter4(-5000.0, 30000.0, 0.0, 1);
+    Cube building4(buildingCenter4, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter5(5000.0, 47000.0, 0.0, 1);
+    Cube building5(buildingCenter5, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter6(-5000.0, 47000.0, 0.0, 1);
+    Cube building6(buildingCenter6, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter7(5000.0, 64000.0, 0.0, 1);
+    Cube building7(buildingCenter7, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter8(-5000.0, 64000.0, 0.0, 1);
+    Cube building8(buildingCenter8, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter9(20000.0, 13000.0, 0.0, 1);
+    Cube building9(buildingCenter9, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter10(-20000.0, 13000.0, 0.0, 1);
+    Cube building10(buildingCenter10, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter11(5000.0, -13000.0, 0.0, 1);
+    Cube building11(buildingCenter11, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter12(-5000.0, -13000.0, 0.0, 1);
+    Cube building12(buildingCenter12, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter13(5000.0, 95000.0, 0.0, 1);
+    Cube building13(buildingCenter13, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate buildingCenter14(-5000.0, 95000.0, 0.0, 1);
+    Cube building14(buildingCenter14, 143/255.0, 141/255.0, 141/255.0, 1.0,
+                   0.0, 0.0, 0.0, 6000.0, 12000.0, 100000.0, 0.2, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+    Coordinate roadCenter(0.0, 800.0, 0.0, 1);
+    Cube road1(roadCenter, 0/255.0, 0/255.0, 0/255.0, 1.0,
+               0.0, 0.0, 0.0, 100000.0, 3000.0, 10.0, 0.0, 0.0, 0.0, 0.0);
+    totalObjects++;
+
+
+    Object *objects[totalObjects];
+    objects[0] = &plane1;
+    objects[1] = &cube1;
+    objects[2] = &sphere1;
+    objects[3] = &wheel1;
+    objects[4] = &wheel2;
+    objects[5] = &building1;
+    objects[6] = &building2;
+    objects[7] = &building3;
+    objects[8] = &building4;
+    objects[9] = &building5;
+    objects[10] = &building6;
+    objects[11] = &building7;
+    objects[12] = &building8;
+    objects[13] = &building9;
+    objects[14] = &building10;
+    objects[15] = &building11;
+    objects[16] = &building12;
+    objects[17] = &building13;
+    objects[18] = &building14;
+    objects[19] = &road1;
+
+
+    Coordinate lightPosition(0.0,-1000.0,2000.0,1); // point light coordinate
